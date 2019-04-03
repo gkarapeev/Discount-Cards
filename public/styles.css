@@ -4,6 +4,8 @@ body {
   padding: 0;
 }
 
+/* HEADER SECTION --------------------- */
+
 header {
   background-color: #009688;
   height: 100px;
@@ -65,12 +67,49 @@ header {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: #00000042;
-  opacity: 0.7;
+  background-color: #000000;
+  opacity: 0.26;
   margin-right: 20px;
 }
 
 .usr-info {
   display: flex;
   flex-direction: column;
+}
+
+/* FILTER SECTION --------------------- */
+
+#section-filter {
+  background-color: #e3e3e3;
+}
+
+.container-filter {
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  width: 80%;
+  height: 100px;
+}
+
+.filter {
+  width: 25%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.filter::after {
+  content: '';
+  background-color: #000000;
+  opacity: 0.12;
+  height: 70%;
+  width: 1px;
+  border-radius: 0.5px;
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
 }
