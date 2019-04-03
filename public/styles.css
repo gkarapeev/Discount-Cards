@@ -1,7 +1,8 @@
 body {
-  font-family: sans-serif;
+  font-family: 'Roboto', sans-serif;
   margin: 0;
   padding: 0;
+  background-color: #eee;
 }
 
 /* HEADER SECTION --------------------- */
@@ -37,11 +38,6 @@ header {
   height: 30px;
   opacity: 0.8;
   margin-right: 10px;
-}
-
-.brand-text {
-  position: relative;
-  top: 2px;
 }
 
 .user-msg {
@@ -96,7 +92,7 @@ header {
   align-content: center;
   width: 80%;
   height: 100px;
-  padding: 20px 0 20px 0;
+  padding: 10px 0 10px 0;
 }
 
 .filter-block {
@@ -109,6 +105,7 @@ header {
   padding: 0 20px 0 20px;
 }
 
+.filter-block:nth-child(1)::before,
 .filter-block::after {
   content: '';
   background-color: #000000;
@@ -124,20 +121,8 @@ header {
   transform: translateY(-50%);
 }
 
-#spacer {
-  margin-left: auto;
-}
-
-#filters-title {
-  text-transform: uppercase;
-  color: #909090;
-  display: flex;
-  justify-content: center;
-  padding-left: 0;
-}
-
-#filters-title::after {
-  content: none;
+.filter-block:nth-child(1)::before {
+  left: 0;
 }
 
 .filter-caption {
@@ -148,7 +133,6 @@ header {
   justify-content: center;
   /* border: 1px dashed rgb(234, 0, 255); */
   height: 40px;
-  font-weight: 400;
 }
 
 .filter-cbox-container {
@@ -172,7 +156,7 @@ header {
 .filter-cbox {
   /* box-sizing: border-box;
   border: 1px dashed rgba(0, 0, 0, 0.281); */
-  padding: 0 6px 0 6px;
+  padding: 0 7px 0 7px;
   display: flex;
 }
 
@@ -200,9 +184,9 @@ header {
 
 /* Create a custom checkbox */
 .checkmark {
-  height: 20px;
-  width: 20px;
-  margin-right: 5px;
+  height: 18px;
+  width: 18px;
+  margin-right: 6px;
   border-radius: 3px;
   border: 2px solid #808080;
   box-sizing: border-box;
@@ -234,10 +218,10 @@ header {
 
 /* Style the checkmark/indicator */
 .cbox-label .checkmark:after {
-  left: 7px;
-  top: 3px;
+  left: 6px;
+  top: 2px;
   width: 5px;
-  height: 10px;
+  height: 9px;
   border: solid white;
   border-width: 0 2px 2px 0;
   -webkit-transform: rotate(45deg);
