@@ -147,7 +147,8 @@ header {
   align-items: center;
   justify-content: center;
   /* border: 1px dashed rgb(234, 0, 255); */
-  height: 50px;
+  height: 40px;
+  font-weight: 400;
 }
 
 .filter-cbox-container {
