@@ -86,10 +86,11 @@ header {
 .container-filter {
   margin: auto;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-content: center;
   width: 80%;
   height: 100px;
+  padding: 20px 0 20px 0;
 }
 
 .filter-block {
@@ -117,6 +118,10 @@ header {
   transform: translateY(-50%);
 }
 
+#spacer {
+  margin-left: auto;
+}
+
 #filters-title {
   text-transform: uppercase;
   color: #909090;
@@ -125,13 +130,17 @@ header {
   padding-left: 0;
 }
 
+#filters-title::after {
+  content: none;
+}
+
 .filter-caption {
   color: #009688;
   box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px dashed rgb(234, 0, 255);
+  /* border: 1px dashed rgb(234, 0, 255); */
   height: 50px;
 }
 
@@ -140,17 +149,38 @@ header {
   margin-block-start: 0;
   margin-block-end: 0;
   padding-inline-start: 0;
-  padding: 0 15px 0 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-sizing: border-box;
-  border: 1px dashed rgb(0, 185, 15);
+  /* box-sizing: border-box;
+  border: 1px dashed rgb(0, 185, 15); */
   flex-grow: 1;
+  color: #909090;
 }
 
 .filter-cbox {
-  box-sizing: border-box;
-  border: 1px dashed rgba(0, 0, 0, 0.281);
-  padding: 0 3px 0 3px;
+  /* box-sizing: border-box;
+  border: 1px dashed rgba(0, 0, 0, 0.281); */
+  padding: 0 6px 0 6px;
+  display: flex;
+}
+
+.filter-date-container {
+  display: flex;
+}
+
+.filter-date-container input[type="date"] {
+  background: #e3e3e300;
+  border: none;
+  font-family: sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #009688;
+  width: 90%;
+}
+
+.filter-date label {
+  display: block;
+  color: #909090;
+  font-weight: 400;
 }
