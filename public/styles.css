@@ -122,6 +122,7 @@ header {
 }
 
 .filter-block:nth-child(1)::before {
+  right: initial;
   left: 0;
 }
 
@@ -248,6 +249,37 @@ header {
   display: block;
   color: #909090;
   font-weight: 400;
+}
+
+.filter-search-container input {
+  border: none;
+  background: #e3e3e300;
+  border-radius: 3px;
+  border-bottom: 1px solid #c7c7c7;
+  font-size: 1rem;
+  height: 35px;
+  transition: background 0.2s, border 0.2s;
+  padding-left: 10px;
+  font-weight: 100;
+}
+
+.filter-search-container input::placeholder {
+  color: #acacac;
+}
+
+.filter-search-container input:hover {
+  background: #d6d6d6;
+  border-bottom: 1px solid #7c7c7c;
+}
+
+.filter-search-container input:focus {
+  outline: none;
+  background: #f0f0f0;
+  border-bottom: 2px solid #009688;
+}
+
+.filter-search-container input:focus::placeholder {
+  color: #dddddd;
 }
 
 /* CONTENT SECTION --------------------- */
