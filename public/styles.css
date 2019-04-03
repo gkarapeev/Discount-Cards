@@ -3,3 +3,74 @@ body {
   margin: 0;
   padding: 0;
 }
+
+header {
+  background-color: #009688;
+  height: 100px;
+  color: white;
+  display: flex;
+  font-weight: 100;
+}
+
+.container-header {
+  width: 90vw;
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  opacity: 0.8;
+}
+
+.brand-img {
+  height: 30px;
+  opacity: 0.8;
+  margin-right: 10px;
+}
+
+.brand-text {
+  position: relative;
+  top: 2px;
+}
+
+.user-msg {
+  display: flex;
+  align-items: center;
+}
+
+.user-msg-text {
+  font-size: 1.3rem;
+  color: #eeeeee;
+}
+
+.profile-info {
+  display: flex;
+  align-items: center;
+}
+
+.profile-name {
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.profile-email {
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+.avatar-container {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #00000042;
+  opacity: 0.7;
+  margin-right: 20px;
+}
+
+.usr-info {
+  display: flex;
+  flex-direction: column;
+}
