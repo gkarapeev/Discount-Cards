@@ -4,7 +4,7 @@ body {
   font-family: 'Roboto', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f5f5f5;
+  background-color: #f9f9f9;
 }
 
 /* HEADER SECTION --------------------- */
@@ -329,7 +329,18 @@ header {
   transition: background-color 0.2s, box-shadow 0.6s;
 }
 
-.new-record span {
+.new-record::before {
+  content: 'New Record';
+  position: absolute;
+  left: -100%;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #009688;
+  opacity: 0;
+  transition: all 0.3s;
+}
+
+.new-record.new-record span {
   font-size: 1.1rem;
   font-weight: 500;
   color: #009688;
@@ -346,6 +357,12 @@ header {
   color: white;
   transform: rotate(90deg);
 }
+
+.new-record:hover::before {
+  opacity: 1;
+  transform: translateX(-50%);
+}
+
 .container-body {
   box-sizing: border-box;
   width: 90%;
@@ -391,7 +408,7 @@ header {
   display: grid;
   grid-template-columns: 4fr 2fr 2fr 2fr 2fr 3fr 3fr 2fr;
   padding: 0 25px 0 25px; /* sides hava to match .container-sort */
-  background: #fcfcfc;
+  background: #ffffff;
   border-radius: 3px;
   border: 1px solid rgba(0, 0, 0, 0.068);
   box-sizing: border-box;
@@ -452,6 +469,10 @@ header {
 .record-row-active .button-del {
   width: 35px;
   background-color: #BF736E;
+}
+
+.record-row:hover {
+  background-color: hsl(220, 100%, 98%);
 }
 
 .record-row:hover .button {
