@@ -1,0 +1,38 @@
+[
+  {
+    "name": "Georgi Karapeev",
+    "city": "Sofia",
+    "category": "Services",
+    "accu": "No",
+    "discount": 50,
+    "expiry": "05 April 2019",
+    "num": 4050030519
+  },
+  {
+    "name": "Marko Popovic",
+    "city": "Niš",
+    "category": "Services",
+    "accu": "No",
+    "discount": 50,
+    "expiry": "05 April 2019",
+    "num": 4050030519
+  },
+  {
+    "name": "Vladan Petrovic",
+    "city": "Niš",
+    "category": "Services",
+    "accu": "No",
+    "discount": 50,
+    "expiry": "05 April 2019",
+    "num": 4050030519
+  },
+  {
+    "name": "Tsvyatko Ivanov",
+    "city": "Plovdiv",
+    "category": "Services",
+    "accu": "No",
+    "discount": 50,
+    "expiry": "05 April 2019",
+    "num": 4050030519
+  }
+]

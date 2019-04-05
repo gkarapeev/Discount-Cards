@@ -18,20 +18,18 @@ var Record = function (name, city, category, accu, discount, expiry, num) {
   this.num = num;
 }
 
-// FOUR EXAMPLE ENTRIES ***********************************************
-var georgi = new Record('Georgi Karapeev', 'Sofia', 'Services', 'No', 50, new Date(2019, 3, 5), 4050030519);
-var marko = new Record('Marko Popovic', 'Niš', 'Services', 'No', 50, new Date(2019, 3, 5), 4050030519);
-var vlada = new Record('Vladan Petrovic', 'Niš', 'Services', 'No', 50, new Date(2019, 3, 5), 4050030519);
-var tsvyatko = new Record('Tsvyatko Ivanov', 'Plovdiv', 'Services', 'No', 50, new Date(2019, 3, 5), 4050030519);
-
-// RECORD DATA ********************************************************
-var recordData = [georgi, marko, vlada, tsvyatko];
-
+// EXAMPLE DATA OBJECT ***********************************************
+// var georgi = new Record('Georgi Karapeev', 'Sofia', 'Services', 'No', 50, new Date(2019, 3, 5), 4050030519);
 
 // BUILD HTML FROM EXISTING RECORDS ***********************************
 
+if (localStorage.discountCards) {
+  var recordData = JSON.parse(localStorage.discountCards);
+}
+
 for (let i = recordData.length - 1; i >= 0; i--) {
-  var rowData = [];
+  let rowData = [];
+
   for (field in recordData[i]) {
     rowData.push(recordData[i][field]);
   }
@@ -41,11 +39,11 @@ for (let i = recordData.length - 1; i >= 0; i--) {
                 <div class="record-field city">${rowData[1]}</div>
                   <div class="record-field category">${rowData[2]}</div>
                   <div class="record-field accumulation">${rowData[3]}</div>
-                  <div class="record-field d-percent">${rowData[4]}</div>
+                  <div class="record-field d-percent">${rowData[4]}%</div>
                   <div class="record-field exp-date">${rowData[5]}</div>
                   <div class="record-field card-num">${rowData[6]}</div>
                   <div class="record-field modify">
-                    <div class="button button-edit">Edit</div>
+                    <div class="button button-edit" onclick="editRow(this);">Edit</div>
                     <div class="button button-del" onclick="deleteRow(this);">
                         <svg version="1.1" class="bin-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                           viewBox="0 0 32 32" xml:space="preserve">
@@ -62,13 +60,11 @@ for (let i = recordData.length - 1; i >= 0; i--) {
                     </div>
                   </div>
                 </div>`;
-  
+
   // Insert the HTML
   record_cont.insertAdjacentHTML('afterbegin', html);
 
 }
-
-
 
 // CREATE *************************************************************
 function insertRow() {
@@ -114,8 +110,41 @@ function deleteRow(row) {
 }
 
 // UPDATE *************************************************************
+function editRow(button) {
+
+  let row = button.parentNode.parentNode;
+
+  let rows = Array.prototype.slice.call(record_cont.children); // No bloody clue how this gets the count of children elements, but YOLO, I need to get things done!
+  
+  let thisRecord = recordData[rows.indexOf(row)]; // making an object which is identical to the database entry with the same index as the index of this row in the table. I'll need to actually generate unique record ID's if I don't do this, but I'm not ready to go there yet! :D
+
+  thisName = thisRecord.name;
+
+  row.childNodes[1].innerHTML = `<input type="text" value="${thisName}">`;
+  
+  
 
 
+
+
+
+
+
+
+
+
+
+
+
+  // let rowData = [];
+  // let row = button.parentNode.parentNode;
+  // let fieldCount = row.childElementCount - 1; // Minus one because last field are the "modify" buttons
+
+  // for (let i = 0; i < fieldCount; i++) {
+  //   rowData.push
+  // }
+  
+}
 
 // ACTIVE STATE *******************************************************
 function removeActive() {
@@ -135,3 +164,9 @@ document.addEventListener('click', function() {
   if ((event.target.closest('.record-row')) || (event.target.closest('.new-record'))) return;
   else removeActive();
 });
+
+
+
+// LOCALSTORAGE *******************************************************
+
+// localStorage.discountCards = JSON.stringify(recordData);
