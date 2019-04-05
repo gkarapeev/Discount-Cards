@@ -150,7 +150,7 @@
   </section><!-- #endregion -->
 
   <section>
-    <div class="new-record"><span>+</span></div>
+    <div class="new-record" onclick="insertRow();"><span>+</span></div>
     <div class="container-body">
       <div class="container-sort"><!-- #region [rgba(43, 15, 15, 1)] -->
         <div class="sort-word"><span>Name</span></div>
@@ -164,7 +164,7 @@
       </div><!-- #endregion -->
 
       <div class="container-records"><!-- #region [rgba(0, 0, 0, 0.6)] -->
-        <div class="record-row">
+        <div class="record-row" onclick="setActive(this);">
           <div class="record-field name">Mark Johnson</div>
           <div class="record-field city">Sofia</div>
           <div class="record-field category">Books</div>
@@ -190,7 +190,7 @@
             </div>
           </div>
         </div>
-        <div class="record-row record-row-active">
+        <div class="record-row" onclick="setActive(this);">
           <div class="record-field name">Mark Johnson</div>
           <div class="record-field city">Sofia</div>
           <div class="record-field category">Books</div>
@@ -216,7 +216,7 @@
             </div>
           </div>
         </div>
-        <div class="record-row">
+        <div class="record-row" onclick="setActive(this);">
           <div class="record-field name">Mark Johnson</div>
           <div class="record-field city">Sofia</div>
           <div class="record-field category">Books</div>
@@ -242,7 +242,7 @@
             </div>
           </div>
         </div>
-        <div class="record-row">
+        <div class="record-row" onclick="setActive(this);">
           <div class="record-field name">Mark Johnson</div>
           <div class="record-field city">Sofia</div>
           <div class="record-field category">Books</div>

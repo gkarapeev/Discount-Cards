@@ -327,6 +327,7 @@ header {
   align-items: center;
   background: #c5dad8;
   transition: background-color 0.2s, box-shadow 0.6s;
+  cursor: pointer;
 }
 
 .new-record::before {
@@ -414,6 +415,7 @@ header {
   box-sizing: border-box;
   font-size: 0.9rem;
   color: #4e4e4e;
+  cursor: pointer;
 }
 
 .modify {
