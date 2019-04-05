@@ -37,12 +37,12 @@ for (let i = 0; i < 7; i++) {
   doc_row_1[i].innerHTML = row[i];
 }
 
-function insertRow(record) {
+function insertRow() {
 
   // Remove the active state from any other active elements
   removeActive();
 
-  // Insert the blank new row
+  // Define the content of the new row
   var newRow = `<div class="record-row record-row-active" onclick="setActive(this);">
                   <div class="record-field name"></div>
                   <div class="record-field city"></div>
@@ -53,7 +53,7 @@ function insertRow(record) {
                     <div class="record-field card-num"></div>
                     <div class="record-field modify">
                       <div class="button button-edit">Edit</div>
-                      <div class="button button-del">
+                      <div class="button button-del" onclick="deleteRow(this);">
                           <svg version="1.1" class="bin-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                             viewBox="0 0 32 32" xml:space="preserve">
                             <style type="text/css">
@@ -70,7 +70,12 @@ function insertRow(record) {
                     </div>
                 </div>`
 
+  // Insert the content
   record_cont.insertAdjacentHTML('afterbegin', newRow);
+}
+
+function deleteRow(row) {
+  row.parentNode.parentNode.parentNode.removeChild(row.parentNode.parentNode);
 }
 
 function removeActive() {
