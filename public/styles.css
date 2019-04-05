@@ -416,7 +416,7 @@ header {
   font-size: 0.9rem;
   color: #4e4e4e;
   cursor: pointer;
-  transition: margin 0.2s;
+  transition: all 0.1s;
 }
 
 .modify {

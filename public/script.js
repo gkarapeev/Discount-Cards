@@ -1,4 +1,12 @@
+// GLOBAL VARIABLES ***************************************************
 var record_cont = document.querySelector('.container-records');
+
+// Define a Record object constructor with an expression
+var myDateFormat = {
+  day: '2-digit',
+  month: 'long',
+  year: 'numeric'
+}
 
 var Record = function (name, city, category, accu, discount, expiry, num) {
   this.name = name;
@@ -10,39 +18,44 @@ var Record = function (name, city, category, accu, discount, expiry, num) {
   this.num = num;
 }
 
-var myDateFormat = {
-  day: '2-digit',
-  month: 'long',
-  year: 'numeric'
-}
+// FOUR EXAMPLE ENTRIES ***********************************************
+var georgi = new Record('Georgi Karapeev', 'Sofia', 'Services', 'No', 50, new Date(2019, 3, 5), 4050030519);
+var marko = new Record('Marko Popovic', 'Niš', 'Services', 'No', 50, new Date(2019, 3, 5), 4050030519);
+var vlada = new Record('Vladan Petrovic', 'Niš', 'Services', 'No', 50, new Date(2019, 3, 5), 4050030519);
+var tsvyatko = new Record('Tsvyatko Ivanov', 'Plovdiv', 'Services', 'No', 50, new Date(2019, 3, 5), 4050030519);
 
-var john = new Record('Georgi Karapeev', 'Mezek', 'Services', 'No', 50, new Date(2019, 3, 5), 2120030419);
-
-var row = [];
-
-// Fill "row" with the values of "record"
-for (cell in john) {
-  row.push(john[cell]);
-}
-
-// Get the "record-field" from the HTML
-var doc_row_1_cell = document.getElementsByClassName('record-row').item(1).getElementsByClassName('record-field');
-
-// Make an array containing the first 7 "record-field" elements of the row
-var doc_row_1 = [doc_row_1_cell[0], doc_row_1_cell[1], doc_row_1_cell[2], doc_row_1_cell[3], doc_row_1_cell[4], doc_row_1_cell[5], doc_row_1_cell[6]];
+// RECORD DATA ********************************************************
+var recordData = [georgi, marko, vlada, tsvyatko];
 
 
-// Iterate through the first 6 cells in the row and fill them in with info from the corresponding array index
-for (let i = 0; i < 7; i++) {
-  doc_row_1[i].innerHTML = row[i];
-}
+// BUILD HTML FROM EXISTING RECORDS ***********************************
 
+// var row = [];
+
+// // Fill "row" with the values of "record"
+// for (cell in john) {
+//   row.push(john[cell]);
+// }
+
+// // Get the "record-field" from the HTML
+// var doc_row_1_cell = document.getElementsByClassName('record-row').item(1).getElementsByClassName('record-field');
+
+// // Make an array containing the first 7 "record-field" elements of the row
+// var doc_row_1 = [doc_row_1_cell[0], doc_row_1_cell[1], doc_row_1_cell[2], doc_row_1_cell[3], doc_row_1_cell[4], doc_row_1_cell[5], doc_row_1_cell[6]];
+
+
+// // Iterate through the first 6 cells in the row and fill them in with info from the corresponding array index
+// for (let i = 0; i < 7; i++) {
+//   doc_row_1[i].innerHTML = row[i];
+// }
+
+// CREATE *************************************************************
 function insertRow() {
 
   // Remove the active state from any other active elements
   removeActive();
 
-  // Define the content of the new row
+  // Define the HTML content of the new row
   var newRow = `<div class="record-row record-row-active" onclick="setActive(this);">
                   <div class="record-field name"></div>
                   <div class="record-field city"></div>
@@ -70,14 +83,20 @@ function insertRow() {
                     </div>
                 </div>`
 
-  // Insert the content
+  // Insert the HTML
   record_cont.insertAdjacentHTML('afterbegin', newRow);
 }
 
+// DELETE *************************************************************
 function deleteRow(row) {
   row.parentNode.parentNode.parentNode.removeChild(row.parentNode.parentNode);
 }
 
+// UPDATE *************************************************************
+
+
+
+// ACTIVE STATE *******************************************************
 function removeActive() {
   let active_element = document.querySelector('.record-row-active');
   if (active_element) {
@@ -85,13 +104,13 @@ function removeActive() {
   }
 }
 
-// Remove active state by clicking outside a row
-document.addEventListener('click', function() {
-  if (event.target.closest('.record-row')) return;
-  else removeActive();
-}, false);
-
 function setActive(row) {
   removeActive();
   row.classList.add('record-row-active');
 }
+
+// Remove active state by clicking anywhere other than .record-row or .new-record
+document.addEventListener('click', function() {
+  if ((event.target.closest('.record-row')) || (event.target.closest('.new-record'))) return;
+  else removeActive();
+});
