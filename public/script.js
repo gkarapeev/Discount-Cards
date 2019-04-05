@@ -85,6 +85,12 @@ function removeActive() {
   }
 }
 
+// Remove active state by clicking outside a row
+document.addEventListener('click', function() {
+  if (event.target.closest('.record-row')) return;
+  else removeActive();
+}, false);
+
 function setActive(row) {
   removeActive();
   row.classList.add('record-row-active');
