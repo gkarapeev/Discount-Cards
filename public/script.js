@@ -113,17 +113,39 @@ function deleteRow(row) {
 function editRow(button) {
 
   let row = button.parentNode.parentNode;
-
   let rows = Array.prototype.slice.call(record_cont.children); // No bloody clue how this gets the count of children elements, but YOLO, I need to get things done!
-  
   let thisRecord = recordData[rows.indexOf(row)]; // making an object which is identical to the database entry with the same index as the index of this row in the table. I'll need to actually generate unique record ID's if I don't do this, but I'm not ready to go there yet! :D
 
   thisName = thisRecord.name;
 
-  row.childNodes[1].innerHTML = `<input type="text" value="${thisName}">`;
+  // row.childNodes[1].innerHTML = `<input type="text" value="${thisName}">`;
   
-  
+  let asd = `<div class="record-field name"><form onsubmit=""><input type="text" value="${thisRecord.name}"></div>
+                  <div class="record-field city"><input type="text" value="${thisRecord.city}"></div>
+                    <div class="record-field category"><input type="text" value="${thisRecord.category}"></div>
+                    <div class="record-field accumulation"><input type="text" value="${thisRecord.accu}"></div>
+                    <div class="record-field d-percent"><input type="text" value="${thisRecord.discount}"></div>
+                    <div class="record-field exp-date"><input type="text" value="${thisRecord.expiry}"></div>
+                    <div class="record-field card-num"><input type="text" value="${thisRecord.num}"></div>
+                    <div class="record-field modify">
+                      <div class="button button-edit">OK</form></div>
+                      <div class="button button-del" onclick="deleteRow(this);">
+                          <svg version="1.1" class="bin-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                            viewBox="0 0 32 32" xml:space="preserve">
+                            <style type="text/css">
+                            .st0{fill:#F5F5F5;}
+                            </style>
+                            <g id="trash">
+                              <path class="st0" d="M30,6.8C29.9,5.2,28.6,4,27,4h-3V3l0,0c0-1.7-1.3-3-3-3H11C9.3,0,8,1.3,8,3l0,0v1H5C3.4,4,2.1,5.2,2,6.8l0,0V8
+                                v1c0,1.1,0.9,2,2,2l0,0v17c0,2.2,1.8,4,4,4h16c2.2,0,4-1.8,4-4V11l0,0c1.1,0,2-0.9,2-2V8V6.8L30,6.8z M10,3c0-0.6,0.4-1,1-1h10
+                                c0.6,0,1,0.4,1,1v1H10V3z M26,28c0,1.1-0.9,2-2,2H8c-1.1,0-2-0.9-2-2V11h20V28z M28,8v1H4V8V7c0-0.6,0.4-1,1-1h22c0.6,0,1,0.4,1,1
+                                V8z"/>
+                            </g>
+                          </svg>
+                      </div>
+                    </div>`;
 
+  row.innerHTML = asd;
 
 
 

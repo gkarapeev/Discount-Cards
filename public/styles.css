@@ -474,6 +474,20 @@ header {
   background-color: #BF736E;
 }
 
+/* EDIT MODE --------------------------------- */
+
+/* {
+  height: 100%;
+  border: none;
+  background-color: #eff9fc;
+  border-radius: 3px;
+  font-size: 0.9rem;
+  padding: 10px;
+  box-sizing: border-box;
+  margin: 0 10px 0 10px;
+} */
+
+/* ------------------------------------------------- */
 .record-row:hover {
   background-color: hsl(220, 100%, 98%);
 }
