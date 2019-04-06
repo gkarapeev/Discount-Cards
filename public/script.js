@@ -179,73 +179,13 @@ function saveRow(button) {
   console.log(newValues);
   
   // Write the values of newValues to an object
-
-  // Firstly, create the proper Date
-  let newDateData = newValues[5].split(' ');
-  let newYear = parseInt(newDateData[2]);
-  let newMonth;
-  switch (newDateData[1]) {
-    case 'January':
-      newMonth = parseInt(0);
-      break;
-
-    case 'February':
-      newMonth = parseInt(1);
-      break;
-
-    case 'March':
-      newMonth = parseInt(2);
-      break;
-
-    case 'April':
-      newMonth = parseInt(3);
-      break;
-
-    case 'May':
-      newMonth = parseInt(4);
-      break;
-
-    case 'Juna':
-      newMonth = parseInt(5);
-      break;
-
-    case 'July':
-      newMonth = parseInt(6);
-      break;
-
-    case 'August':
-      newMonth = parseInt(7);
-      break;
-
-    case 'September':
-      newMonth = parseInt(8);
-      break;
-
-    case 'October':
-      newMonth = parseInt(9);
-      break;
-
-    case 'November':
-      newMonth = parseInt(10);
-      break;
-
-    default:
-      newMonth = parseInt(11);
-    break;
-  }
-
-  let newDay = parseInt(newDateData[0]);
-
-  let newDate = new Date(newYear, newMonth, newDay);
-
-  // Create an object with the new data
   let newRecord = {
     'name' : newValues[0],
     'city' : newValues[1],
     'category' : newValues[2],
     'accu' : newValues[3],
     'discount' : newValues[4],
-    'expiry' : newDate,
+    'expiry' : newValues[5],
     'num' : newValues[6]
   }
 
