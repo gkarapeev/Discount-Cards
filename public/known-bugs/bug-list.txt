@@ -1,0 +1,11 @@
+Bug 01
+1. Press "New Record" button
+2. before clicking "OK", press the "delete record" button
+3. What happens is that a record gets deleted BEFORE a new record was ever written to the database. This results in the first entry of the database being deleted instead of the unfinished new record.
+# Currently patched up by removing the "onclick" function of the "Delete" button while in new-record-creation mode. (line 99 in script.js - the insertRow() function)
+
+Bug 02
+1. The page looks horrendous in IE
+
+Bug 03
+1. The "Edit" and "Delete" buttons of inactive record rows are not well centered in their row (horizontally) on larger screens

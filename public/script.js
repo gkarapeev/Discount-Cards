@@ -96,7 +96,7 @@ function insertRow() {
                     <div class="record-field card-num"><input type="text" value=""></div>
                     <div class="record-field modify">
                       <div class="button button-edit button-save" onclick="saveRow(this, true);">OK</div>
-                      <div class="button button-del" onclick="deleteRow(this);">
+                      <div class="button button-del">
                           <svg version="1.1" class="bin-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                             viewBox="0 0 32 32" xml:space="preserve">
                             <style type="text/css">
@@ -254,7 +254,6 @@ function saveRow(button, isNew) {
                               </div>`;
 }
 
-
 // ACTIVE STATE *******************************************************
 function removeActive() {
   let active_element = document.querySelector('.record-row-active');
@@ -273,3 +272,10 @@ document.addEventListener('click', function () {
   if ((event.target.closest('.record-row')) || (event.target.closest('.new-record')) || (event.target.closest('.button-edit'))) return;
   else removeActive();
 });
+
+var row_list = document.querySelectorAll('.record-row');
+var row_list_el = document.getElementsByClassName('record-row');
+
+function searchRec() {
+
+}
