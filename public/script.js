@@ -24,6 +24,14 @@ var Record = function (name, city, category, accu, discount, expiry, num) {
 // BUILD HTML FROM EXISTING RECORDS ***********************************
 if (localStorage.discountCards) {
   var recordData = JSON.parse(localStorage.discountCards);
+} else {
+  var georgi = new Record('Georgi Karapeev', 'Sofia', 'Services', 'No', 50, new Date(2019, 3, 5), 4050030519);
+  var marko = new Record('Marko Popovic', 'Niš', 'Services', 'No', 50, new Date(2019, 3, 5), 4050030519);
+  var vlada = new Record('Vladan Petrovic', 'Niš', 'Services', 'No', 50, new Date(2019, 3, 5), 4050030519);
+  var tsvyatko = new Record('Tsvyatko Ivanov', 'Plovdiv', 'Services', 'No', 50, new Date(2019, 3, 5), 4050030519);
+  
+  var recordData = [georgi, marko, vlada, tsvyatko];
+  localStorage.discountCards = JSON.stringify(recordData);
 }
 
 function showList() {
@@ -87,7 +95,7 @@ function insertRow() {
                     <div class="record-field exp-date"><input type="text" value=""></div>
                     <div class="record-field card-num"><input type="text" value=""></div>
                     <div class="record-field modify">
-                      <div class="button button-edit button-save" onclick="saveRow(this);">OK</div>
+                      <div class="button button-edit button-save" onclick="saveRow(this, true);">OK</div>
                       <div class="button button-del" onclick="deleteRow(this);">
                           <svg version="1.1" class="bin-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                             viewBox="0 0 32 32" xml:space="preserve">
@@ -110,11 +118,26 @@ function insertRow() {
   record_cont.insertAdjacentHTML('afterbegin', newRow);
 
   enableSaveOnEnter();
+
 }
 
 // DELETE *************************************************************
-function deleteRow(row) {
-  row.parentNode.parentNode.parentNode.removeChild(row.parentNode.parentNode);
+function deleteRow(button) {
+
+  let confirmed = confirm('Confirm record deletion?');
+  if (confirmed) {
+    let row = button.parentNode.parentNode;
+    let rows = Array.prototype.slice.call(record_cont.children); // No bloody clue how this gets the count of children elements, but YOLO, I need to get things done!
+      
+    // Updating the database  
+    // First, update the recordData
+    recordData.splice(rows.indexOf(row), 1);
+    // Second, update the localStorage
+    localStorage.discountCards = JSON.stringify(recordData);
+
+    //Finally, remove it from the HTML
+    row.parentNode.removeChild(row);
+  }
 }
 
 // EDIT *************************************************************
@@ -171,7 +194,7 @@ function enableSaveOnEnter() {
   }
 }
 
-function saveRow(button) {
+function saveRow(button, isNew) {
   let row = button.parentNode.parentNode;
   let rows = Array.prototype.slice.call(record_cont.children); // No bloody clue how this gets the count of children elements, but YOLO, I need to get things done!
   let newValues = [];
@@ -193,8 +216,14 @@ function saveRow(button) {
   }
 
   // Update the corresponding recordData entry
-  recordData[rows.indexOf(row.parentNode)] = newRecord;
-  localStorage.discountCards = JSON.stringify(recordData);
+
+  if (isNew) {
+    recordData.unshift(newRecord);
+    localStorage.discountCards = JSON.stringify(recordData);
+  } else {
+    recordData[rows.indexOf(row.parentNode)] = newRecord;
+    localStorage.discountCards = JSON.stringify(recordData);
+  }
 
   row.parentNode.classList.remove("row-edit");
 
