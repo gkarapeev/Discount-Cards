@@ -77,16 +77,17 @@ function insertRow() {
   removeActive();
 
   // Define the HTML content of the new row
-  var newRow = `<div class="record-row record-row-active" onclick="setActive(this);">
-                  <div class="record-field name"></div>
-                  <div class="record-field city"></div>
-                    <div class="record-field category"></div>
-                    <div class="record-field accumulation"></div>
-                    <div class="record-field d-percent"></div>
-                    <div class="record-field exp-date"></div>
-                    <div class="record-field card-num"></div>
+  var newRow = `<div class="record-row row-edit record-row-active" onclick="setActive(this);">
+                  <form name="edit-form" onsubmit="event.preventDefault();">
+                    <div class="record-field name"><input type="text" value=""></div>
+                    <div class="record-field city"><input type="text" value=""></div>
+                    <div class="record-field category"><input type="text" value=""></div>
+                    <div class="record-field accumulation"><input type="text" value=""></div>
+                    <div class="record-field d-percent"><input type="text" value=""></div>
+                    <div class="record-field exp-date"><input type="text" value=""></div>
+                    <div class="record-field card-num"><input type="text" value=""></div>
                     <div class="record-field modify">
-                      <div class="button button-edit">Edit</div>
+                      <div class="button button-edit button-save" onclick="saveRow(this);">OK</div>
                       <div class="button button-del" onclick="deleteRow(this);">
                           <svg version="1.1" class="bin-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                             viewBox="0 0 32 32" xml:space="preserve">
@@ -102,10 +103,13 @@ function insertRow() {
                           </svg>
                       </div>
                     </div>
+                  </form>
                 </div>`;
 
   // Insert the HTML
   record_cont.insertAdjacentHTML('afterbegin', newRow);
+
+  enableSaveOnEnter();
 }
 
 // DELETE *************************************************************
@@ -150,8 +154,11 @@ function editRow(button) {
 
   row.classList.add("row-edit");
 
+  enableSaveOnEnter();
+}
 
-  // Trigger the saveRow() also by pressing Enter
+// Trigger the saveRow() also by pressing Enter
+function enableSaveOnEnter() {
   let edit_fields = document.getElementsByName('edit-form')[0].getElementsByTagName('input');
 
   for (let i = 0; i < edit_fields.length; i++) {
@@ -162,8 +169,6 @@ function editRow(button) {
       }
     })
   }
-
-
 }
 
 function saveRow(button) {
