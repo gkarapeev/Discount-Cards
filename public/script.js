@@ -109,26 +109,22 @@ function deleteRow(row) {
   row.parentNode.parentNode.parentNode.removeChild(row.parentNode.parentNode);
 }
 
-// UPDATE *************************************************************
+// EDIT *************************************************************
 function editRow(button) {
 
   let row = button.parentNode.parentNode;
   let rows = Array.prototype.slice.call(record_cont.children); // No bloody clue how this gets the count of children elements, but YOLO, I need to get things done!
   let thisRecord = recordData[rows.indexOf(row)]; // making an object which is identical to the database entry with the same index as the index of this row in the table. I'll need to actually generate unique record ID's if I don't do this, but I'm not ready to go there yet! :D
-
-  thisName = thisRecord.name;
-
-  // row.childNodes[1].innerHTML = `<input type="text" value="${thisName}">`;
   
-  let asd = `<div class="record-field name"><form onsubmit=""><input type="text" value="${thisRecord.name}"></div>
-                  <div class="record-field city"><input type="text" value="${thisRecord.city}"></div>
+  let editForm = `<form name="edit-form" onsubmit="event.preventDefault();"><div class="record-field name"><input type="text" value="${thisRecord.name}"></div>
+                    <div class="record-field city"><input type="text" value="${thisRecord.city}"></div>
                     <div class="record-field category"><input type="text" value="${thisRecord.category}"></div>
                     <div class="record-field accumulation"><input type="text" value="${thisRecord.accu}"></div>
                     <div class="record-field d-percent"><input type="text" value="${thisRecord.discount}"></div>
                     <div class="record-field exp-date"><input type="text" value="${thisRecord.expiry}"></div>
                     <div class="record-field card-num"><input type="text" value="${thisRecord.num}"></div>
                     <div class="record-field modify">
-                      <div class="button button-edit">OK</form></div>
+                      <div class="button button-edit button-save" onclick="saveRow(this);">OK</div>
                       <div class="button button-del" onclick="deleteRow(this);">
                           <svg version="1.1" class="bin-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                             viewBox="0 0 32 32" xml:space="preserve">
@@ -143,30 +139,32 @@ function editRow(button) {
                             </g>
                           </svg>
                       </div>
-                    </div>`;
+                    </div>
+                  </form>`;
 
-  row.innerHTML = asd;
+  row.innerHTML = editForm;
 
-
-
-
-
+  row.classList.add("row-edit");
 
 
-
-
-
-
-
-  // let rowData = [];
-  // let row = button.parentNode.parentNode;
-  // let fieldCount = row.childElementCount - 1; // Minus one because last field are the "modify" buttons
-
-  // for (let i = 0; i < fieldCount; i++) {
-  //   rowData.push
-  // }
+  // Trigger the saveRow() also by pressing Enter
+  let edit_fields = document.getElementsByName('edit-form')[0].getElementsByTagName('input');
   
+  for (let i = 0; i < edit_fields.length; i++) {  edit_fields[i].addEventListener("keyup", function(event) {
+      event.preventDefault();
+      if (event.keyCode == 13) {
+        document.getElementsByClassName("button-save")[0].click();
+      }
+    })
+  }
+
+
 }
+
+function saveRow(button) {
+  console.log('yo!');
+}
+
 
 // ACTIVE STATE *******************************************************
 function removeActive() {
@@ -183,7 +181,7 @@ function setActive(row) {
 
 // Remove active state by clicking anywhere other than .record-row or .new-record
 document.addEventListener('click', function() {
-  if ((event.target.closest('.record-row')) || (event.target.closest('.new-record'))) return;
+  if ((event.target.closest('.record-row')) || (event.target.closest('.new-record')) || (event.target.closest('.button-edit'))) return;
   else removeActive();
 });
 

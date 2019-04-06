@@ -423,6 +423,16 @@ header {
   justify-content: center;
 }
 
+.row-edit {
+  background-color: #e4eaf7;
+  display: flex;
+}
+
+.row-edit form {
+  display: grid;
+  grid-template-columns: 4fr 2fr 2fr 2fr 2fr 3fr 3fr 2fr;
+}
+
 .record-row-active {
   border: none;
   padding: 12px 25px 12px 25px;
@@ -474,9 +484,12 @@ header {
   background-color: #BF736E;
 }
 
-/* EDIT MODE --------------------------------- */
+.record-row:hover {
+  background-color: #f4f8ff;
+}
 
-/* {
+/* EDIT MODE --------------------------------- */
+.record-field input {
   height: 100%;
   border: none;
   background-color: #eff9fc;
@@ -484,13 +497,20 @@ header {
   font-size: 0.9rem;
   padding: 10px;
   box-sizing: border-box;
-  margin: 0 10px 0 10px;
-} */
-
-/* ------------------------------------------------- */
-.record-row:hover {
-  background-color: hsl(220, 100%, 98%);
+  margin: 0;
+  width: 90%;
+  box-shadow: inset 0 0 4px #b3cad1;
 }
+
+.record-field input:focus {
+  background-color: #ffffff;
+  outline: none;
+}
+
+.row-edit:hover {
+  background-color: #e4eaf7;
+}
+/* ------------------------------------------------- */
 
 .record-row:hover .button {
   display: flex;
