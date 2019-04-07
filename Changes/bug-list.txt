@@ -15,3 +15,6 @@ Bug 04
 
 Bug 05
 1. When editing an existing record, the text jumps up with 1 or 2 px when you select the field. I think it's because of "box-sizing: border-box".
+
+Bug 06
+1. Pressing Enter in the search field submits the form and resets the page.

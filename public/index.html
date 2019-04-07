@@ -53,7 +53,7 @@
     <div class="container-filter">
       <div class="filter-block">
         <div class="filter-caption">
-          <form autocomplete="off">
+          <form autocomplete="off" onsubmit="preventDefault()">
           <span>Percentage</span>
         </div>
         <ul class="filter-cbox-container">
@@ -143,7 +143,7 @@
         </div>
         <div class="filter-search-container">
           <input id="search-box" type="text" placeholder="Name, City, or #" name="search" onkeyup="searchRec()">
-          </form>
+        </form>
         </div>
       </div>
     </div>

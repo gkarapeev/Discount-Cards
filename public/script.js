@@ -86,7 +86,7 @@ function insertRow() {
 
   // Define the HTML content of the new row
   var newRow = `<div class="record-row row-edit record-row-active" onclick="setActive(this);">
-                  <form name="edit-form" onsubmit="event.preventDefault();">
+                  <form name="edit-form" onsubmit="preventDefault();">
                     <div class="record-field name"><input type="text" value=""></div>
                     <div class="record-field city"><input type="text" value=""></div>
                     <div class="record-field category"><input type="text" value=""></div>

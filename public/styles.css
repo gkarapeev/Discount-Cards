@@ -325,7 +325,7 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #c5dad8;
+  background-color: #009687;
   transition: background-color 0.2s, box-shadow 0.6s;
   cursor: pointer;
 }
@@ -344,18 +344,16 @@ header {
 .new-record.new-record span {
   font-size: 1.1rem;
   font-weight: 500;
-  color: #009688;
+  color: white;
   transition: all 0.5s;
   display: inline-block;
 }
 
 .new-record:hover {
   box-shadow: 0px 8px 8px rgba(0, 0, 0, 0.24), 0px 0px 8px rgba(0, 0, 0, 0.12);
-  background-color: #009688;
 }
 
 .new-record:hover span {
-  color: white;
   transform: rotate(90deg);
 }
 
