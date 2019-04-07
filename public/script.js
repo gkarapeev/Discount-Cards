@@ -273,9 +273,19 @@ document.addEventListener('click', function () {
   else removeActive();
 });
 
-var row_list = document.querySelectorAll('.record-row');
-var row_list_el = document.getElementsByClassName('record-row');
 
-function searchRec() {
 
+  function searchRec() {
+
+    let searchBox = document.getElementById('search-box');
+    let searchTerm = searchBox.value.toLowerCase();
+    let row_list = document.getElementsByClassName('record-row');
+
+    for (let i = 0; i < row_list.length; i++) {
+      if (row_list[i].children[0].textContent.toLowerCase().indexOf(searchTerm) > -1) {
+        row_list[i].style.display = "grid";
+      } else {
+        row_list[i].style.display = "none";
+      }
+    }
 }
