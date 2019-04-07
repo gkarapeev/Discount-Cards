@@ -18,3 +18,6 @@ Bug 05
 
 Bug 06
 1. Pressing Enter in the search field submits the form and resets the page.
+
+Bug 07
+1. Filtering and Search functions override each other, because each of them loops through ALL rows on the page, disregarding the current value of their "display" propery. They should take that into account.

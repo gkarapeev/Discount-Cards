@@ -299,3 +299,42 @@ function searchRec() {
     }
   }
 }
+
+// FILTER **********************************************************
+//CATEGORY
+function filterCat() {
+
+  let row_list = document.getElementsByClassName('record-row');
+
+  let showCosmetics = document.getElementById('cosmetics').checked;
+  let showBooks = document.getElementById('books').checked;
+  let showAccessories = document.getElementById('accessories').checked;
+  let showServices = document.getElementById('services').checked;
+
+  // let all_items = [showCosmetics, showBooks, showAccessories, showServices];
+  let checkedItems = [];
+  if (showCosmetics) checkedItems.push('Cosmetics');
+  if (showBooks) checkedItems.push('Books');
+  if (showAccessories) checkedItems.push('Accessories');
+  if (showServices) checkedItems.push('Services');
+  
+  if (checkedItems.length >= 1) {
+    for (let i = 0; i < row_list.length; i++) {
+
+      let row = row_list[i];
+      let category = row.children[2].textContent;
+
+      if (checkedItems.indexOf(category) > -1) {
+        row.style.display = "grid";
+      } else {
+        row.style.display = "none";
+      }
+
+    }
+  } else {
+    for (let i = 0; i < row_list.length; i++) {
+      let row = row_list[i];
+      row.style.display = "grid";
+    }
+  }
+}
