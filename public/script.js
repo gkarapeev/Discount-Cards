@@ -274,18 +274,28 @@ document.addEventListener('click', function () {
 });
 
 
+// SEARCH **********************************************************
+function searchRec() {
 
-  function searchRec() {
+  let searchBox = document.getElementById('search-box');
+  let searchTerm = searchBox.value.toLowerCase();
+  let row_list = document.getElementsByClassName('record-row');
 
-    let searchBox = document.getElementById('search-box');
-    let searchTerm = searchBox.value.toLowerCase();
-    let row_list = document.getElementsByClassName('record-row');
+  for (let i = 0; i < row_list.length; i++) {
 
-    for (let i = 0; i < row_list.length; i++) {
-      if (row_list[i].children[0].textContent.toLowerCase().indexOf(searchTerm) > -1) {
-        row_list[i].style.display = "grid";
-      } else {
-        row_list[i].style.display = "none";
-      }
+    let row = row_list[i];
+    let name = row.children[0].textContent.toLowerCase();
+    let city = row.children[1].textContent.toLowerCase();
+    let number = row.children[6].textContent;
+
+    let matchName = name.indexOf(searchTerm) > -1;
+    let matchCity = city.indexOf(searchTerm) > -1;
+    let matchNumber = number.indexOf(searchTerm) > -1;
+    
+    if (matchName || matchCity || matchNumber) {
+      row.style.display = "grid";
+    } else {
+      row.style.display = "none";
     }
+  }
 }
