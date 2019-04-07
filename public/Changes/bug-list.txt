@@ -9,3 +9,9 @@ Bug 02
 
 Bug 03
 1. The "Edit" and "Delete" buttons of inactive record rows are not well centered in their row (horizontally) on larger screens
+
+Bug 04
+1. The "New Record" button is not correctly positioned and escapes its usual position on very small screens or when there is a long list of records (so long that you need to scroll down).
+
+Bug 05
+1. When editing an existing record, the text jumps up with 1 or 2 px when you select the field. I think it's because of "box-sizing: border-box".

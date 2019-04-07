@@ -1,0 +1,16 @@
+FUNCTIONAL
+F1 - Automatically select first input field when editing/creating a record
+F2 - put hover & active states of the modify buttons (edit & delete)
+F3 - Adapt the design for mobile screens
+F4 - Make a pop-up modal for the record-deletion confirmation.
+F5 - Remove the "Card Number" input field when creating/editing a record and have it generate automatically using the input from the other fields.
+F6 - Replace the "Category", "Accumulation", "Discount", and "Expiry Date" text input fields with ones of the appropriate type.
+F7 - Enable search functionality
+F8 - Enable filtering functionality
+
+COSMETIC
+C1 - Animate the bottom border of active/focused input fields. Make the line expand outwards from the center.
+C2 - add some color variation to the logo in the top left.
+C3 - Add a subtle dorp shadow below the filter pane, helping to visually separate it from the content.
+C4 - The date-input fields in the filter pane are too long in width and eppear weird and off-center. Figure out a way to fix that.
+C5 - The date-input fields in the filter pane should have bolder text when not empty.
