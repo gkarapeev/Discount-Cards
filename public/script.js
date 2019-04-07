@@ -18,17 +18,14 @@ var Record = function (name, city, category, accu, discount, expiry, num) {
   this.num = num;
 }
 
-// EXAMPLE DATA OBJECT ***********************************************
-// var georgi = new Record('Georgi Karapeev', 'Sofia', 'Services', 'No', 50, new Date(2019, 3, 5), 4050030519);
-
 // BUILD HTML FROM EXISTING RECORDS ***********************************
 if (localStorage.discountCards) {
   var recordData = JSON.parse(localStorage.discountCards);
 } else {
-  var georgi = new Record('Georgi Karapeev', 'Sofia', 'Services', 'No', 50, new Date(2019, 3, 5), 4050030519);
-  var marko = new Record('Marko Popovic', 'Niš', 'Services', 'No', 50, new Date(2019, 3, 5), 4050030519);
-  var vlada = new Record('Vladan Petrovic', 'Niš', 'Services', 'No', 50, new Date(2019, 3, 5), 4050030519);
-  var tsvyatko = new Record('Tsvyatko Ivanov', 'Plovdiv', 'Services', 'No', 50, new Date(2019, 3, 5), 4050030519);
+  var georgi = new Record('Georgi Karapeev', 'Sofia', 'Books', 'No', 5, new Date(2019, 3, 5), 4050030519);
+  var marko = new Record('Marko Popovic', 'Niš', 'Cosmetics', 'No', 30, new Date(2019, 3, 5), 4050030519);
+  var vlada = new Record('Vladan Petrovic', 'Niš', 'Services', 'No', 10, new Date(2019, 3, 5), 4050030519);
+  var tsvyatko = new Record('Tsvyatko Ivanov', 'Plovdiv', 'Accessories', 'No', 20, new Date(2019, 3, 5), 4050030519);
   
   var recordData = [georgi, marko, vlada, tsvyatko];
   localStorage.discountCards = JSON.stringify(recordData);
@@ -301,7 +298,45 @@ function searchRec() {
 }
 
 // FILTER **********************************************************
-//CATEGORY
+// PERCENTAGE
+function filterPerc() {
+
+  let row_list = document.getElementsByClassName('record-row');
+
+  let show_5 = document.getElementById('percent-5').checked;
+  let show_10 = document.getElementById('percent-10').checked;
+  let show_20 = document.getElementById('percent-20').checked;
+  let show_30 = document.getElementById('percent-30').checked;
+
+  let checkedItems = [];
+  if (show_5) checkedItems.push('5%');
+  if (show_10) checkedItems.push('10%');
+  if (show_20) checkedItems.push('20%');
+  if (show_30) checkedItems.push('30%');
+  
+  if (checkedItems.length >= 1) {
+
+    for (let i = 0; i < row_list.length; i++) {
+      let row = row_list[i];
+      let percent = row.children[4].textContent;
+
+      if (checkedItems.indexOf(percent) > -1) {
+        row.style.display = "grid";
+      } else {
+        row.style.display = "none";
+      }
+    }
+
+  } else {
+    for (let i = 0; i < row_list.length; i++) {
+      let row = row_list[i];
+      row.style.display = "grid";
+    }
+  }
+}
+
+
+// CATEGORY
 function filterCat() {
 
   let row_list = document.getElementsByClassName('record-row');
@@ -311,7 +346,6 @@ function filterCat() {
   let showAccessories = document.getElementById('accessories').checked;
   let showServices = document.getElementById('services').checked;
 
-  // let all_items = [showCosmetics, showBooks, showAccessories, showServices];
   let checkedItems = [];
   if (showCosmetics) checkedItems.push('Cosmetics');
   if (showBooks) checkedItems.push('Books');

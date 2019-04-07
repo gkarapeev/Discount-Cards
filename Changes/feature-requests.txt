@@ -9,6 +9,7 @@ F6 - Replace the "Category", "Accumulation", "Discount", and "Expiry Date" text 
 F8 - Enable filtering functionality
 F9 - Enable sorting functionality
 F10 - Add placeholders of the input fields when creating a new record.
+F11 - Add a "Clear" button next to every filtering input field in order to make it easier for users to reset. In fact, add a whole "Reset All" button.
 
 COSMETIC
 C1 - Animate the bottom border of active/focused input fields. Make the line expand outwards from the center.
