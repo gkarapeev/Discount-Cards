@@ -30,6 +30,6 @@ Bug 07
   5. Select any record again, and click on its "Edit" button.
   6. It displays incorrectly. The reason is that when the filters change the display property of the elements, the style becomes inline. This results in the CSS stylesheet being overriden by the display property applied inline by the last filter. Not good.
 
-Bug 09
+[Fixed] Bug 09
 1. If you apply any filter, all of the records disappear, even though they might satisfy the filter criteria.
 2. ONLY IF you apply a DATE filter FIRST, BEFORE applying other filters, then everything works as expected.

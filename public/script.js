@@ -294,7 +294,7 @@ document.addEventListener('click', function () {
 var filterCriteria = {
   'percentage': [false, false, false, false],
   'category': [false, false, false, false],
-  'expiry': ['', ''],
+  'expiry': [],
   'term': ''
 }
 
