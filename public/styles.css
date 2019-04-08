@@ -423,7 +423,7 @@ header {
 
 .row-edit {
   background-color: #eaf2f5;
-  display: flex;
+  display: flex !important;
 }
 
 .row-edit form {
