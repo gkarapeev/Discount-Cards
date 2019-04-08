@@ -1,17 +1,25 @@
+<<<<<<< HEAD
 // GLOBAL VARIABLES ************************************************************
 // 1. FILTERS
 // 1.1 Filters - Percent Checkboxes
+=======
+// GLOBAL VARIABLES ***************************************************
+>>>>>>> 1951ace8517820b733b98f4d449193c1f88d9053
 var checkBox_5 = document.getElementById('percent-5');
 var checkBox_10 = document.getElementById('percent-10');
 var checkBox_20 = document.getElementById('percent-20');
 var checkBox_30 = document.getElementById('percent-30');
 
+<<<<<<< HEAD
 // 1.2 Filters - Category Checkboxes
+=======
+>>>>>>> 1951ace8517820b733b98f4d449193c1f88d9053
 var cosmetics = document.getElementById('cosmetics')
 var books = document.getElementById('books')
 var accessories = document.getElementById('accessories')
 var services = document.getElementById('services')
 
+<<<<<<< HEAD
 // 1.3 Filters - Date Inputs
 var date_from = document.getElementById('from');
 var date_to = document.getElementById('to');
@@ -22,6 +30,16 @@ var search_box = document.getElementById('search-box');
 // 2. RECORDS
 var record_cont = document.querySelector('.container-records');
 var row_list = document.getElementsByClassName('record-row');
+=======
+var date_from = document.getElementById('from');
+var date_to = document.getElementById('to');
+
+var search_box = document.getElementById('search-box');
+
+var record_cont = document.querySelector('.container-records');
+var row_list = document.getElementsByClassName('record-row');
+
+>>>>>>> 1951ace8517820b733b98f4d449193c1f88d9053
 
 // RECORD OBJECT CONSTRUCTOR ***************************************************
 var myDateFormat = {
@@ -50,6 +68,10 @@ if (localStorage.discountCards) {
   var marko = new Record('Marko Popovic', 'Niš', 'Cosmetics', 'Yes', 30, new Date(2019, 4, 5), 1130050519);
   var vlada = new Record('Vladan Petrovic', 'Niš', 'Services', 'No', 10, new Date(2019, 5, 5), 4010050619);
   var tsvyatko = new Record('Tsvyatko Ivanov', 'Plovdiv', 'Accessories', 'Yes', 20, new Date(2019, 6, 5), 3120050719);
+<<<<<<< HEAD
+=======
+  
+>>>>>>> 1951ace8517820b733b98f4d449193c1f88d9053
   var recordData = [georgi, marko, vlada, tsvyatko];
   
   localStorage.discountCards = JSON.stringify(recordData);
@@ -296,6 +318,7 @@ document.addEventListener('click', function () {
   else removeActive();
 });
 
+<<<<<<< HEAD
 // FILTER **********************************************************************
 // An object that holds the current state of ALL filters
 var filterCriteria = {
@@ -450,6 +473,152 @@ function applyFilter() {
     let matchCity = city.indexOf(filterCriteria.term) > -1;
     let matchNumber = number.indexOf(filterCriteria.term) > -1;
 
+=======
+// FILTER **********************************************************
+
+// Common check for all filters
+
+var filterCriteria = {
+  'percentage': [false, false, false, false],
+  'category': [false, false, false, false],
+  'expiry': ['', ''],
+  'term': ''
+}
+
+function loadPercent() {
+
+  let show_5 = checkBox_5.checked;
+  let show_10 = checkBox_10.checked;
+  let show_20 = checkBox_20.checked;
+  let show_30 = checkBox_30.checked;
+
+  filterCriteria.percentage[0] = show_5;
+  filterCriteria.percentage[1] = show_10;
+  filterCriteria.percentage[2] = show_20;
+  filterCriteria.percentage[3] = show_30;  
+}
+
+function loadCategory() {
+
+  let showCosmetics = cosmetics.checked;
+  let showBooks = books.checked;
+  let showAccessories = accessories.checked;
+  let showServices = services.checked;
+
+  filterCriteria.category[0] = showCosmetics;
+  filterCriteria.category[1] = showBooks;
+  filterCriteria.category[2] = showAccessories;
+  filterCriteria.category[3] = showServices;
+}
+
+function loadDates() {
+  let from_raw = new Date(date_from.value);
+  let to_raw = new Date(date_to.value);
+
+  // let from = from_raw.toLocaleDateString('en-GB', myDateFormat);
+  // let to = to_raw.toLocaleDateString('en-GB', myDateFormat);
+
+  filterCriteria.expiry[0] = from_raw;
+  filterCriteria.expiry[1] = to_raw;
+}
+
+function loadTerm() {
+  let searchTerm = search_box.value.toLowerCase();
+  filterCriteria.term = searchTerm;
+}
+
+function applyFilter() {
+
+  for (let i = 0; i < recordData.length; i++) {
+    let row = recordData[i];
+    let show = true;
+
+    // DISCOUNT PERCENTAGE
+    // 0. If there is a checked box, perform the check, otherwise ignore it
+    if (filterCriteria.percentage.some(state => state === true)) {
+      
+      // 1. Determine how many percent this entry has
+      // 2. For each case, see if this percentage should be visible and if not - set "show" to false
+      switch (row.discount) {
+        case 5:
+          show = filterCriteria.percentage[0];
+          break;
+
+        case 10:
+          show = filterCriteria.percentage[1];
+          break;
+
+        case 20:
+          show = filterCriteria.percentage[2];
+          break;
+        
+        case 30:
+          show = filterCriteria.percentage[3];
+          break;
+        
+        default:
+        break;
+      }
+    }
+
+    // CATEGORY
+    // 0. If there is a checked box, perform the check, otherwise ignore it
+    if (filterCriteria.category.some(state => state === true)) {
+      
+      // 1. Determine what category this row has
+      // 2. For each case, see if this category should be visible and if not - set "show" to false
+      switch (row.category.toLowerCase()) {
+        case 'cosmetics':
+        show = filterCriteria.category[0];
+        break;
+
+      case 'books':
+        show = filterCriteria.category[1];
+        break;
+
+      case 'accessories':
+        show = filterCriteria.category[2];
+        break;
+      
+      case 'services':
+        show = filterCriteria.category[3];
+        break;
+      
+      default:
+      break;
+      }
+    }
+
+    // DATE
+    // 1. Obtain a date object with the date of this row
+    let date = new Date(row.expiry);
+
+    // 2. Check if the expiry date in the filterCriteria object is valid
+    if (!isNaN(filterCriteria.expiry[0])) {
+      // 3. Check if the date on this row satisfies the criteria
+      if (date <= filterCriteria.expiry[0]){
+        show = false;
+      }
+    }
+    // Repeat the same steps 2. and 3. for the second date
+    if (!isNaN(filterCriteria.expiry[1])) {
+      if (date >= filterCriteria.expiry[1]) {
+        show = false;
+      }
+    }
+
+    // SEARCH TERM
+    let searchTerm = search_box.value.toLowerCase();
+
+    let name = row.name.toLowerCase();
+    let city = row.city.toLowerCase();
+    let number = toString(row.num);
+
+    let matchName = name.indexOf(searchTerm) > -1;
+    let matchCity = city.indexOf(searchTerm) > -1;
+    let matchNumber = number.indexOf(searchTerm) > -1;
+
+>>>>>>> 1951ace8517820b733b98f4d449193c1f88d9053
     if (!(matchName || matchCity || matchNumber)) {
       show = false;
     }
@@ -461,6 +630,10 @@ function applyFilter() {
       row_list[i].style.display = 'none';
     }
   }
+<<<<<<< HEAD
 }
 
 // SORT ************************************************************************
+=======
+}
+>>>>>>> 1951ace8517820b733b98f4d449193c1f88d9053
