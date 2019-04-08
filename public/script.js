@@ -19,7 +19,7 @@ var date_to = document.getElementById('to');
 // 1.4 Filters - Search Box
 var search_box = document.getElementById('search-box');
 
-// 2. DOCUMENT ELEMENTS
+// 2. RECORDS
 var record_cont = document.querySelector('.container-records');
 var row_list = document.getElementsByClassName('record-row');
 
@@ -40,19 +40,22 @@ var Record = function (name, city, category, accu, discount, expiry, num) {
   this.num = num;
 }
 
-// BUILD HTML FROM EXISTING RECORDS ********************************************
+// INITIALIZE DATABASE *********************************************************
+// 1. Check if it exists in localStorage
 if (localStorage.discountCards) {
   var recordData = JSON.parse(localStorage.discountCards);
+// 2. If not, generate some example data and store it locally
 } else {
   var georgi = new Record('Georgi Karapeev', 'Sofia', 'Books', 'No', 5, new Date(2019, 3, 5), 2005050419);
   var marko = new Record('Marko Popovic', 'Niš', 'Cosmetics', 'Yes', 30, new Date(2019, 4, 5), 1130050519);
   var vlada = new Record('Vladan Petrovic', 'Niš', 'Services', 'No', 10, new Date(2019, 5, 5), 4010050619);
   var tsvyatko = new Record('Tsvyatko Ivanov', 'Plovdiv', 'Accessories', 'Yes', 20, new Date(2019, 6, 5), 3120050719);
-
   var recordData = [georgi, marko, vlada, tsvyatko];
+  
   localStorage.discountCards = JSON.stringify(recordData);
 }
 
+// GENERATE HTML ELEMENTS FROM THE DATA ****************************************
 function showList() {
 
   for (let i = recordData.length - 1; i >= 0; i--) {
