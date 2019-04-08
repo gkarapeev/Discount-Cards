@@ -488,10 +488,6 @@ header {
 }
 
 /* EDIT MODE --------------------------------- */
-.record-row-active.row-edit {
-  border: 1px solid #a8d8d256;
-}
-
 .record-field input {
   height: 100%;
   border: none;
