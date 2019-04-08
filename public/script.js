@@ -1,7 +1,29 @@
-// GLOBAL VARIABLES ***************************************************
-var record_cont = document.querySelector('.container-records');
+// GLOBAL VARIABLES ************************************************************
+// 1. FILTERS
+// 1.1 Filters - Percent Checkboxes
+var checkBox_5 = document.getElementById('percent-5');
+var checkBox_10 = document.getElementById('percent-10');
+var checkBox_20 = document.getElementById('percent-20');
+var checkBox_30 = document.getElementById('percent-30');
 
-// Define a Record object constructor with an expression
+// 1.2 Filters - Category Checkboxes
+var cosmetics = document.getElementById('cosmetics')
+var books = document.getElementById('books')
+var accessories = document.getElementById('accessories')
+var services = document.getElementById('services')
+
+// 1.3 Filters - Date Inputs
+var date_from = document.getElementById('from');
+var date_to = document.getElementById('to');
+
+// 1.4 Filters - Search Box
+var search_box = document.getElementById('search-box');
+
+// 2. RECORDS
+var record_cont = document.querySelector('.container-records');
+var row_list = document.getElementsByClassName('record-row');
+
+// RECORD OBJECT CONSTRUCTOR ***************************************************
 var myDateFormat = {
   day: '2-digit',
   month: 'long',
@@ -18,21 +40,24 @@ var Record = function (name, city, category, accu, discount, expiry, num) {
   this.num = num;
 }
 
-// BUILD HTML FROM EXISTING RECORDS ***********************************
+// INITIALIZE DATABASE *********************************************************
+// 1. Check if it exists in localStorage
 if (localStorage.discountCards) {
   var recordData = JSON.parse(localStorage.discountCards);
+// 2. If not, generate some example data and store it locally
 } else {
-  var georgi = new Record('Georgi Karapeev', 'Sofia', 'Books', 'No', 5, new Date(2019, 3, 5), 4050030519);
-  var marko = new Record('Marko Popovic', 'Niš', 'Cosmetics', 'No', 30, new Date(2019, 3, 5), 4050030519);
-  var vlada = new Record('Vladan Petrovic', 'Niš', 'Services', 'No', 10, new Date(2019, 3, 5), 4050030519);
-  var tsvyatko = new Record('Tsvyatko Ivanov', 'Plovdiv', 'Accessories', 'No', 20, new Date(2019, 3, 5), 4050030519);
-  
+  var georgi = new Record('Georgi Karapeev', 'Sofia', 'Books', 'No', 5, new Date(2019, 3, 5), 2005050419);
+  var marko = new Record('Marko Popovic', 'Niš', 'Cosmetics', 'Yes', 30, new Date(2019, 4, 5), 1130050519);
+  var vlada = new Record('Vladan Petrovic', 'Niš', 'Services', 'No', 10, new Date(2019, 5, 5), 4010050619);
+  var tsvyatko = new Record('Tsvyatko Ivanov', 'Plovdiv', 'Accessories', 'Yes', 20, new Date(2019, 6, 5), 3120050719);
   var recordData = [georgi, marko, vlada, tsvyatko];
+  
   localStorage.discountCards = JSON.stringify(recordData);
 }
 
+// GENERATE HTML ELEMENTS FROM THE DATA ****************************************
 function showList() {
-  
+
   for (let i = recordData.length - 1; i >= 0; i--) {
     let rowData = [];
 
@@ -75,7 +100,7 @@ function showList() {
 
 showList();
 
-// CREATE *************************************************************
+// CREATE RECORD ***************************************************************
 function insertRow() {
 
   // Remove the active state from any other active elements
@@ -118,14 +143,14 @@ function insertRow() {
 
 }
 
-// DELETE *************************************************************
+// DELETE RECORD ***************************************************************
 function deleteRow(button) {
 
   let confirmed = confirm('Confirm record deletion?');
   if (confirmed) {
     let row = button.parentNode.parentNode;
     let rows = Array.prototype.slice.call(record_cont.children); // No bloody clue how this gets the count of children elements, but YOLO, I need to get things done!
-      
+
     // Updating the database  
     // First, update the recordData
     recordData.splice(rows.indexOf(row), 1);
@@ -137,7 +162,7 @@ function deleteRow(button) {
   }
 }
 
-// EDIT *************************************************************
+// EDIT RECORD *****************************************************************
 function editRow(button) {
 
   let row = button.parentNode.parentNode;
@@ -191,6 +216,7 @@ function enableSaveOnEnter() {
   }
 }
 
+// SAVE RECORD
 function saveRow(button, isNew) {
   let row = button.parentNode.parentNode;
   let rows = Array.prototype.slice.call(record_cont.children); // No bloody clue how this gets the count of children elements, but YOLO, I need to get things done!
@@ -200,16 +226,16 @@ function saveRow(button, isNew) {
   for (let i = 0; i < row.children.length; i++) {
     newValues.push(row.children[i].children[0].value);
   }
-  
+
   // Write the values of newValues to an object
   let newRecord = {
-    'name' : newValues[0],
-    'city' : newValues[1],
-    'category' : newValues[2],
-    'accu' : newValues[3],
-    'discount' : newValues[4],
-    'expiry' : newValues[5],
-    'num' : newValues[6]
+    'name': newValues[0],
+    'city': newValues[1],
+    'category': newValues[2],
+    'accu': newValues[3],
+    'discount': newValues[4],
+    'expiry': newValues[5],
+    'num': newValues[6]
   }
 
   // Update the corresponding recordData entry
@@ -251,7 +277,7 @@ function saveRow(button, isNew) {
                               </div>`;
 }
 
-// ACTIVE STATE *******************************************************
+// ACTIVE STATE ****************************************************************
 function removeActive() {
   let active_element = document.querySelector('.record-row-active');
   if (active_element) {
@@ -270,105 +296,171 @@ document.addEventListener('click', function () {
   else removeActive();
 });
 
+// FILTER **********************************************************************
+// An object that holds the current state of ALL filters
+var filterCriteria = {
+  'percentage': [false, false, false, false],
+  'category': [false, false, false, false],
+  'expiry': [],
+  'term': ''
+}
 
-// SEARCH **********************************************************
-function searchRec() {
+// Triggered whenever a percent checkbox is changed
+function loadPercent() {
 
-  let searchBox = document.getElementById('search-box');
-  let searchTerm = searchBox.value.toLowerCase();
-  let row_list = document.getElementsByClassName('record-row');
+  let show_5 = checkBox_5.checked;
+  let show_10 = checkBox_10.checked;
+  let show_20 = checkBox_20.checked;
+  let show_30 = checkBox_30.checked;
 
-  for (let i = 0; i < row_list.length; i++) {
+  filterCriteria.percentage[0] = show_5;
+  filterCriteria.percentage[1] = show_10;
+  filterCriteria.percentage[2] = show_20;
+  filterCriteria.percentage[3] = show_30;
+}
 
-    let row = row_list[i];
-    let name = row.children[0].textContent.toLowerCase();
-    let city = row.children[1].textContent.toLowerCase();
-    let number = row.children[6].textContent;
+// Triggered whenever a percent checkbox is changed
+function loadCategory() {
 
-    let matchName = name.indexOf(searchTerm) > -1;
-    let matchCity = city.indexOf(searchTerm) > -1;
-    let matchNumber = number.indexOf(searchTerm) > -1;
-    
-    if (matchName || matchCity || matchNumber) {
-      row.style.display = "grid";
+  let showCosmetics = cosmetics.checked;
+  let showBooks = books.checked;
+  let showAccessories = accessories.checked;
+  let showServices = services.checked;
+
+  filterCriteria.category[0] = showCosmetics;
+  filterCriteria.category[1] = showBooks;
+  filterCriteria.category[2] = showAccessories;
+  filterCriteria.category[3] = showServices;
+}
+
+// Triggered whenever a date input is changed
+function loadDates() {
+  let from_raw = new Date(date_from.value);
+  let to_raw = new Date(date_to.value);
+
+  // let from = from_raw.toLocaleDateString('en-GB', myDateFormat);
+  // let to = to_raw.toLocaleDateString('en-GB', myDateFormat);
+
+  filterCriteria.expiry[0] = from_raw;
+  filterCriteria.expiry[1] = to_raw;
+}
+
+// Triggered whenever a letter is typed in/ deleted from the search box
+function loadTerm() {
+  let searchTerm = search_box.value.toLowerCase();
+  filterCriteria.term = searchTerm;
+}
+
+// Triggered on EVERY change of state of EVERY filter option
+function applyFilter() {
+
+  for (let i = 0; i < recordData.length; i++) {
+    let row = recordData[i];
+    let show = true;
+
+    // DISCOUNT PERCENTAGE
+    // 0. If there is a checked box, perform the check, otherwise ignore it
+    if (filterCriteria.percentage.some(state => state === true)) {
+
+      // 1. Determine how many percent this entry has
+      // 2. For each case, see if this percentage should be visible and if not - set "show" to false
+      switch (row.discount) {
+        case 5:
+          show = filterCriteria.percentage[0];
+          break;
+
+        case 10:
+          show = filterCriteria.percentage[1];
+          break;
+
+        case 20:
+          show = filterCriteria.percentage[2];
+          break;
+
+        case 30:
+          show = filterCriteria.percentage[3];
+          break;
+
+        default:
+          break;
+      }
+    }
+
+    // CATEGORY
+    // 0. If there is a checked box, perform the check, otherwise ignore it
+    if (filterCriteria.category.some(state => state === true)) {
+
+      // 1. Determine what category this row has
+      // 2. For each case, see if this category should be visible and if not - set "show" to false
+      switch (row.category.toLowerCase()) {
+        case 'cosmetics':
+          if (filterCriteria.category[0] === false) {
+            show = false;
+          }
+          break;
+
+        case 'books':
+          if (filterCriteria.category[1] === false) {
+            show = false;
+          }
+          break;
+
+        case 'accessories':
+          if (filterCriteria.category[2] === false) {
+            show = false;
+          }
+          break;
+
+        case 'services':
+          if (filterCriteria.category[3] === false) {
+            show = false;
+          }
+          break;
+
+        default:
+          break;
+      }
+    }
+
+    // DATE
+    // 1. Obtain a date object with the date of this row
+    let date = new Date(row.expiry);
+
+    // 2. Check if the expiry date in the filterCriteria object is valid
+    if (!isNaN(filterCriteria.expiry[0])) {
+      // 3. Check if the date on this row satisfies the criteria
+      if (date <= filterCriteria.expiry[0]) {
+        show = false;
+      }
+    }
+    // Repeat the same steps 2. and 3. for the second date
+    if (!isNaN(filterCriteria.expiry[1])) {
+      if (date >= filterCriteria.expiry[1]) {
+        show = false;
+      }
+    }
+
+    // SEARCH TERM
+
+    let name = row.name.toLowerCase();
+    let city = row.city.toLowerCase();
+    let number = row.num.toString();
+
+    let matchName = name.indexOf(filterCriteria.term) > -1;
+    let matchCity = city.indexOf(filterCriteria.term) > -1;
+    let matchNumber = number.indexOf(filterCriteria.term) > -1;
+
+    if (!(matchName || matchCity || matchNumber)) {
+      show = false;
+    }
+
+    // FINALLY, if ANY of the filters excluded the row, set its "display" to "none", otherwise set it to "grid"
+    if (show) {
+      row_list[i].style.display = 'grid';
     } else {
-      row.style.display = "none";
+      row_list[i].style.display = 'none';
     }
   }
 }
 
-// FILTER **********************************************************
-// PERCENTAGE
-function filterPerc() {
-
-  let row_list = document.getElementsByClassName('record-row');
-
-  let show_5 = document.getElementById('percent-5').checked;
-  let show_10 = document.getElementById('percent-10').checked;
-  let show_20 = document.getElementById('percent-20').checked;
-  let show_30 = document.getElementById('percent-30').checked;
-
-  let checkedItems = [];
-  if (show_5) checkedItems.push('5%');
-  if (show_10) checkedItems.push('10%');
-  if (show_20) checkedItems.push('20%');
-  if (show_30) checkedItems.push('30%');
-  
-  if (checkedItems.length >= 1) {
-
-    for (let i = 0; i < row_list.length; i++) {
-      let row = row_list[i];
-      let percent = row.children[4].textContent;
-
-      if (checkedItems.indexOf(percent) > -1) {
-        row.style.display = "grid";
-      } else {
-        row.style.display = "none";
-      }
-    }
-
-  } else {
-    for (let i = 0; i < row_list.length; i++) {
-      let row = row_list[i];
-      row.style.display = "grid";
-    }
-  }
-}
-
-
-// CATEGORY
-function filterCat() {
-
-  let row_list = document.getElementsByClassName('record-row');
-
-  let showCosmetics = document.getElementById('cosmetics').checked;
-  let showBooks = document.getElementById('books').checked;
-  let showAccessories = document.getElementById('accessories').checked;
-  let showServices = document.getElementById('services').checked;
-
-  let checkedItems = [];
-  if (showCosmetics) checkedItems.push('Cosmetics');
-  if (showBooks) checkedItems.push('Books');
-  if (showAccessories) checkedItems.push('Accessories');
-  if (showServices) checkedItems.push('Services');
-  
-  if (checkedItems.length >= 1) {
-    for (let i = 0; i < row_list.length; i++) {
-
-      let row = row_list[i];
-      let category = row.children[2].textContent;
-
-      if (checkedItems.indexOf(category) > -1) {
-        row.style.display = "grid";
-      } else {
-        row.style.display = "none";
-      }
-
-    }
-  } else {
-    for (let i = 0; i < row_list.length; i++) {
-      let row = row_list[i];
-      row.style.display = "grid";
-    }
-  }
-}
+// SORT ************************************************************************
