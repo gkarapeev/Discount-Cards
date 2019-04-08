@@ -43,13 +43,13 @@ if (localStorage.discountCards) {
   var marko = new Record('Marko Popovic', 'Niš', 'Cosmetics', 'Yes', 30, new Date(2019, 4, 5), 1130050519);
   var vlada = new Record('Vladan Petrovic', 'Niš', 'Services', 'No', 10, new Date(2019, 5, 5), 4010050619);
   var tsvyatko = new Record('Tsvyatko Ivanov', 'Plovdiv', 'Accessories', 'Yes', 20, new Date(2019, 6, 5), 3120050719);
-  
+
   var recordData = [georgi, marko, vlada, tsvyatko];
   localStorage.discountCards = JSON.stringify(recordData);
 }
 
 function showList() {
-  
+
   for (let i = recordData.length - 1; i >= 0; i--) {
     let rowData = [];
 
@@ -142,7 +142,7 @@ function deleteRow(button) {
   if (confirmed) {
     let row = button.parentNode.parentNode;
     let rows = Array.prototype.slice.call(record_cont.children); // No bloody clue how this gets the count of children elements, but YOLO, I need to get things done!
-      
+
     // Updating the database  
     // First, update the recordData
     recordData.splice(rows.indexOf(row), 1);
@@ -217,16 +217,16 @@ function saveRow(button, isNew) {
   for (let i = 0; i < row.children.length; i++) {
     newValues.push(row.children[i].children[0].value);
   }
-  
+
   // Write the values of newValues to an object
   let newRecord = {
-    'name' : newValues[0],
-    'city' : newValues[1],
-    'category' : newValues[2],
-    'accu' : newValues[3],
-    'discount' : newValues[4],
-    'expiry' : newValues[5],
-    'num' : newValues[6]
+    'name': newValues[0],
+    'city': newValues[1],
+    'category': newValues[2],
+    'accu': newValues[3],
+    'discount': newValues[4],
+    'expiry': newValues[5],
+    'num': newValues[6]
   }
 
   // Update the corresponding recordData entry
@@ -308,7 +308,7 @@ function loadPercent() {
   filterCriteria.percentage[0] = show_5;
   filterCriteria.percentage[1] = show_10;
   filterCriteria.percentage[2] = show_20;
-  filterCriteria.percentage[3] = show_30;  
+  filterCriteria.percentage[3] = show_30;
 }
 
 function loadCategory() {
@@ -349,7 +349,7 @@ function applyFilter() {
     // DISCOUNT PERCENTAGE
     // 0. If there is a checked box, perform the check, otherwise ignore it
     if (filterCriteria.percentage.some(state => state === true)) {
-      
+
       // 1. Determine how many percent this entry has
       // 2. For each case, see if this percentage should be visible and if not - set "show" to false
       switch (row.discount) {
@@ -364,41 +364,49 @@ function applyFilter() {
         case 20:
           show = filterCriteria.percentage[2];
           break;
-        
+
         case 30:
           show = filterCriteria.percentage[3];
           break;
-        
+
         default:
-        break;
+          break;
       }
     }
 
     // CATEGORY
     // 0. If there is a checked box, perform the check, otherwise ignore it
     if (filterCriteria.category.some(state => state === true)) {
-      
+
       // 1. Determine what category this row has
       // 2. For each case, see if this category should be visible and if not - set "show" to false
       switch (row.category.toLowerCase()) {
         case 'cosmetics':
-        show = filterCriteria.category[0];
-        break;
+          if (filterCriteria.category[0] === false) {
+            show = false;
+          }
+          break;
 
-      case 'books':
-        show = filterCriteria.category[1];
-        break;
+        case 'books':
+          if (filterCriteria.category[1] === false) {
+            show = false;
+          }
+          break;
 
-      case 'accessories':
-        show = filterCriteria.category[2];
-        break;
-      
-      case 'services':
-        show = filterCriteria.category[3];
-        break;
-      
-      default:
-      break;
+        case 'accessories':
+          if (filterCriteria.category[2] === false) {
+            show = false;
+          }
+          break;
+
+        case 'services':
+          if (filterCriteria.category[3] === false) {
+            show = false;
+          }
+          break;
+
+        default:
+          break;
       }
     }
 
@@ -409,7 +417,7 @@ function applyFilter() {
     // 2. Check if the expiry date in the filterCriteria object is valid
     if (!isNaN(filterCriteria.expiry[0])) {
       // 3. Check if the date on this row satisfies the criteria
-      if (date <= filterCriteria.expiry[0]){
+      if (date <= filterCriteria.expiry[0]) {
         show = false;
       }
     }
