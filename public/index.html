@@ -59,28 +59,28 @@
         <ul class="filter-cbox-container">
           <li class="filter-cbox">
             <label class="cbox-label" for="percent-5">
-              <input type="checkbox" id="percent-5" name="percentage" onclick="filterPerc()"></input>
+              <input type="checkbox" id="percent-5" name="percentage" onclick="loadPercent(); applyFilter();"></input>
               <div class="checkmark"></div>
               5
             </label>
           </li>
           <li class="filter-cbox">
             <label class="cbox-label" for="percent-10">
-              <input type="checkbox" id="percent-10" name="percentage" onclick="filterPerc()"></input>
+              <input type="checkbox" id="percent-10" name="percentage" onclick="loadPercent(); applyFilter();"></input>
               <div class="checkmark"></div>
               10
             </label>
           </li>
           <li class="filter-cbox">
             <label class="cbox-label" for="percent-20">
-              <input type="checkbox" id="percent-20" name="percentage" onclick="filterPerc()"></input>
+              <input type="checkbox" id="percent-20" name="percentage" onclick="loadPercent(); applyFilter();"></input>
               <div class="checkmark"></div>
               20
             </label>
           </li>
           <li class="filter-cbox">
             <label class="cbox-label" for="percent-30">
-              <input type="checkbox" id="percent-30" name="percentage" onclick="filterPerc()"></input>
+              <input type="checkbox" id="percent-30" name="percentage" onclick="loadPercent(); applyFilter();"></input>
               <div class="checkmark"></div>
               30
             </label>
@@ -94,28 +94,28 @@
         <ul class="filter-cbox-container">
             <li class="filter-cbox">
               <label class="cbox-label" for="cosmetics">
-                <input type="checkbox" id="cosmetics" name="category" onclick="filterCat()"></input>
+                <input type="checkbox" id="cosmetics" name="category" onclick="loadCategory(); applyFilter();"></input>
                 <div class="checkmark"></div>
                 Cosmetics
               </label>
             </li>
             <li class="filter-cbox">
               <label class="cbox-label" for="books">
-                <input type="checkbox" id="books" name="category" onclick="filterCat()"></input>
+                <input type="checkbox" id="books" name="category" onclick="loadCategory(); applyFilter();"></input>
                 <div class="checkmark"></div>
                 Books
               </label>
             </li>
             <li class="filter-cbox">
               <label class="cbox-label" for="accessories">
-                <input type="checkbox" id="accessories" name="category" onclick="filterCat()"></input>
+                <input type="checkbox" id="accessories" name="category" onclick="loadCategory(); applyFilter();"></input>
                 <div class="checkmark"></div>
                 Accessories
               </label>
             </li>
             <li class="filter-cbox">
               <label class="cbox-label" for="services">
-                <input type="checkbox" id="services" name="category" onclick="filterCat()"></input>
+                <input type="checkbox" id="services" name="category" onclick="loadCategory(); applyFilter();"></input>
                 <div class="checkmark"></div>
                 Services
               </label>
@@ -129,11 +129,11 @@
         <div class="filter-date-container">
           <div class="filter-date">
             <label for="from">from:</label>
-            <input type="date" id="from" name="date">
+            <input type="date" id="from" name="date" oninput="loadDates(); applyFilter();">
           </div>
           <div class="filter-date">
             <label for="from">to:</label>
-            <input type="date" id="to" name="date">
+            <input type="date" id="to" name="date" oninput="loadDates(); applyFilter();">
           </div>
         </div>
       </div>
@@ -142,7 +142,7 @@
           <span>Search</span>
         </div>
         <div class="filter-search-container">
-          <input id="search-box" type="text" placeholder="Name, City, or #" name="search" onkeyup="searchRec()">
+          <input id="search-box" type="text" placeholder="Name, City, or #" name="search" onkeyup="loadTerm(); applyFilter();">
         </form>
         </div>
       </div>
