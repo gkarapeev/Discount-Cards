@@ -417,9 +417,9 @@ header {
   transition: all 0.1s;
 }
 
-.modify {
+/* .modify {
   justify-content: center;
-}
+} */
 
 .row-edit {
   background-color: #eaf2f5;

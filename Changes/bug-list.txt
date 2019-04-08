@@ -7,7 +7,7 @@ Bug 01
 Bug 02
 1. The page looks horrendous in IE
 
-Bug 03
+[Fixed] Bug 03
 1. The "Edit" and "Delete" buttons of inactive record rows are not well centered in their row (horizontally) on larger screens
 
 Bug 04
@@ -19,7 +19,7 @@ Bug 05
 Bug 06
 1. Pressing Enter in the search field submits the form and resets the page.
 
-Bug 07
+[Fixed] Bug 07
 1. Filtering and Search functions override each other, because each of them loops through ALL rows on the page, disregarding the current value of their "display" propery. They should take that into account.
 
 [Fixed] Bug 08

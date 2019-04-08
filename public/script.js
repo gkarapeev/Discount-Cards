@@ -429,15 +429,14 @@ function applyFilter() {
     }
 
     // SEARCH TERM
-    let searchTerm = search_box.value.toLowerCase();
 
     let name = row.name.toLowerCase();
     let city = row.city.toLowerCase();
-    let number = toString(row.num);
+    let number = row.num.toString();
 
-    let matchName = name.indexOf(searchTerm) > -1;
-    let matchCity = city.indexOf(searchTerm) > -1;
-    let matchNumber = number.indexOf(searchTerm) > -1;
+    let matchName = name.indexOf(filterCriteria.term) > -1;
+    let matchCity = city.indexOf(filterCriteria.term) > -1;
+    let matchNumber = number.indexOf(filterCriteria.term) > -1;
 
     if (!(matchName || matchCity || matchNumber)) {
       show = false;
