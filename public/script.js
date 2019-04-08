@@ -1,24 +1,29 @@
-// GLOBAL VARIABLES ***************************************************
+// GLOBAL VARIABLES ************************************************************
+// 1. FILTERS
+// 1.1 Filters - Percent Checkboxes
 var checkBox_5 = document.getElementById('percent-5');
 var checkBox_10 = document.getElementById('percent-10');
 var checkBox_20 = document.getElementById('percent-20');
 var checkBox_30 = document.getElementById('percent-30');
 
+// 1.2 Filters - Category Checkboxes
 var cosmetics = document.getElementById('cosmetics')
 var books = document.getElementById('books')
 var accessories = document.getElementById('accessories')
 var services = document.getElementById('services')
 
+// 1.3 Filters - Date Inputs
 var date_from = document.getElementById('from');
 var date_to = document.getElementById('to');
 
+// 1.4 Filters - Search Box
 var search_box = document.getElementById('search-box');
 
+// 2. DOCUMENT ELEMENTS
 var record_cont = document.querySelector('.container-records');
 var row_list = document.getElementsByClassName('record-row');
 
-
-// Define a Record object constructor with an expression
+// RECORD OBJECT CONSTRUCTOR ***************************************************
 var myDateFormat = {
   day: '2-digit',
   month: 'long',
@@ -35,7 +40,7 @@ var Record = function (name, city, category, accu, discount, expiry, num) {
   this.num = num;
 }
 
-// BUILD HTML FROM EXISTING RECORDS ***********************************
+// BUILD HTML FROM EXISTING RECORDS ********************************************
 if (localStorage.discountCards) {
   var recordData = JSON.parse(localStorage.discountCards);
 } else {
@@ -92,7 +97,7 @@ function showList() {
 
 showList();
 
-// CREATE *************************************************************
+// CREATE RECORD ***************************************************************
 function insertRow() {
 
   // Remove the active state from any other active elements
@@ -135,7 +140,7 @@ function insertRow() {
 
 }
 
-// DELETE *************************************************************
+// DELETE RECORD ***************************************************************
 function deleteRow(button) {
 
   let confirmed = confirm('Confirm record deletion?');
@@ -154,7 +159,7 @@ function deleteRow(button) {
   }
 }
 
-// EDIT *************************************************************
+// EDIT RECORD *****************************************************************
 function editRow(button) {
 
   let row = button.parentNode.parentNode;
@@ -208,6 +213,7 @@ function enableSaveOnEnter() {
   }
 }
 
+// SAVE RECORD
 function saveRow(button, isNew) {
   let row = button.parentNode.parentNode;
   let rows = Array.prototype.slice.call(record_cont.children); // No bloody clue how this gets the count of children elements, but YOLO, I need to get things done!
@@ -268,7 +274,7 @@ function saveRow(button, isNew) {
                               </div>`;
 }
 
-// ACTIVE STATE *******************************************************
+// ACTIVE STATE ****************************************************************
 function removeActive() {
   let active_element = document.querySelector('.record-row-active');
   if (active_element) {
@@ -287,10 +293,8 @@ document.addEventListener('click', function () {
   else removeActive();
 });
 
-// FILTER **********************************************************
-
-// Common check for all filters
-
+// FILTER **********************************************************************
+// An object that holds the current state of ALL filters
 var filterCriteria = {
   'percentage': [false, false, false, false],
   'category': [false, false, false, false],
@@ -298,6 +302,7 @@ var filterCriteria = {
   'term': ''
 }
 
+// Triggered whenever a percent checkbox is changed
 function loadPercent() {
 
   let show_5 = checkBox_5.checked;
@@ -311,6 +316,7 @@ function loadPercent() {
   filterCriteria.percentage[3] = show_30;
 }
 
+// Triggered whenever a percent checkbox is changed
 function loadCategory() {
 
   let showCosmetics = cosmetics.checked;
@@ -324,6 +330,7 @@ function loadCategory() {
   filterCriteria.category[3] = showServices;
 }
 
+// Triggered whenever a date input is changed
 function loadDates() {
   let from_raw = new Date(date_from.value);
   let to_raw = new Date(date_to.value);
@@ -335,11 +342,13 @@ function loadDates() {
   filterCriteria.expiry[1] = to_raw;
 }
 
+// Triggered whenever a letter is typed in/ deleted from the search box
 function loadTerm() {
   let searchTerm = search_box.value.toLowerCase();
   filterCriteria.term = searchTerm;
 }
 
+// Triggered on EVERY change of state of EVERY filter option
 function applyFilter() {
 
   for (let i = 0; i < recordData.length; i++) {
@@ -450,3 +459,5 @@ function applyFilter() {
     }
   }
 }
+
+// SORT ************************************************************************
