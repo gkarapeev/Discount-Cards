@@ -485,10 +485,16 @@ header {
   align-items: center;
   justify-content: center;
   text-transform: uppercase;
+}
+
+.record-row:hover .button {
+  opacity: 1;
   transition: opacity 0.3s;
 }
 
 .record-row-active .button {
+  transition-delay: 1s;
+  transition: opacity 1s;
   opacity: 1;
   height: 93%;
   color: white;
@@ -537,10 +543,6 @@ header {
 }
 
 /* ------------------------------------------------- */
-
-.record-row:hover .button {
-  opacity: 1;
-}
 
 .button-edit {
   margin-right: 10px;
