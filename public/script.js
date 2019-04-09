@@ -479,35 +479,27 @@ function restoreOrder() {
 let sortCounters = {
   name: 0,
   city: 0,
+  category: 0,
+  accu: 0,
+  discount: 0,
+  expiry: 0,
   num: 0
 }
 
 // The sort function
 let sortData = function(criteria) {
 
-  // 1. Reset other counters
-  // 1.1 Define how
-  function resetCounters(a, b) {
-    sortCounters[a] = 0;
-    sortCounters[b] = 0;
-  }
+  // 1. Reset other sort-direction counters to zero
 
-  // 1.2 Define which
-  switch (criteria) {
-    case 'name':
-      resetCounters('city', 'num');
-      break;
-    
-    case 'city':
-      resetCounters('name', 'num');
-      break;
-    
-    case 'num':
-      resetCounters('name', 'city');
-      break;
-    
-    default:
-    break;
+  // 1.1 List all the counters
+  let allCounters = ['name', 'city', 'category', 'accu', 'discount', 'expiry', 'num'];
+
+  // 1.2 Remove the one we're sorting by and obtain a list of the irrelevant counters
+  let otherCounters = allCounters.filter(cName => cName !== criteria);
+
+  // 1.3 Set them all to zero
+  for (let k = 0; k < otherCounters.length; k++) {
+    sortCounters[otherCounters[k]] = 0;
   }
 
   // 2. Increment the counter
@@ -523,12 +515,29 @@ let sortData = function(criteria) {
 
   // 5. Define how the objects will be sorted
   function compare(a, b) {
-    if (a[criteria] < b[criteria]) {
-      return -1 * direction;
-    }
 
-    if (a[criteria] > b[criteria]) {
-      return 1 * direction;
+    // 5.1 If it's a date field, cast the strings into Date objects
+    if (criteria === 'expiry') {
+      let date_a = new Date(a[criteria]);
+      let date_b = new Date(b[criteria]);
+
+      if (date_a < date_b) {
+        return -1 * direction;
+      }
+
+      if (date_a > date_b) {
+        return 1 * direction;
+      }
+
+    } else {
+    // 5.2 Else, just take the values as they are
+      if (a[criteria] < b[criteria]) {
+        return -1 * direction;
+      }
+
+      if (a[criteria] > b[criteria]) {
+        return 1 * direction;
+      }
     }
 
     return 0;
@@ -537,15 +546,24 @@ let sortData = function(criteria) {
   // 6. If counter isn't ZERO, perform the sort
   if (sortCounters[criteria] !== 0) {
     recordData.sort(compare);
-  
-  } else {
-    // 7. Else, restore the recordData to its original order
-    restoreOrder();
-  }
-  
-  // 8. Display the sorted result
-  showList(recordData);
 
-  // 9. Apply any active filters
-  applyFilter();
+    // 6.1 Display the sorted result
+    showList(recordData);
+
+    // 6.2 Apply any active filters
+    applyFilter();
+
+    // 6.3 Restore original order
+    restoreOrder();
+
+  } else {
+    // 7.1 Else, restore the recordData to its original order
+    restoreOrder();
+
+    // 7.2 Display the UNsorted result
+    showList(recordData);
+
+    // 7.3 Apply any active filters
+    applyFilter();
+  }
 }
