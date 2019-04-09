@@ -5,8 +5,8 @@ F3 - Adapt the design for mobile screens
 F4 - Make a pop-up modal for the record-deletion confirmation.
 F5 - Remove the "Card Number" input field when creating/editing a record and have it generate automatically using the input from the other fields.
 F6 - Replace the "Category", "Accumulation", "Discount", and "Expiry Date" text input fields with ones of the appropriate type.
-[Done] F7 - Enable search functionality
-[Done] F8 - Enable filtering functionality
+F7 [Done] - Enable search functionality
+F8 [Done] - Enable filtering functionality
 F9 - Enable sorting functionality
 F10 - Add placeholders of the input fields when creating a new record.
 F11 - Add a "Clear" button next to every filtering input field in order to make it easier for users to reset. In fact, add a whole "Reset All" button.
@@ -16,10 +16,10 @@ F13 - For the search box, add checkbox options to search by only one or two of t
 COSMETIC
 C1 - Animate the bottom border of active/focused input fields. Make the line expand outwards from the center.
 C2 - add some color variation to the logo in the top left.
-[Done] C3 - Add a subtle dorp shadow below the filter pane, helping to visually separate it from the content.
+C3 [Done] - Add a subtle dorp shadow below the filter pane, helping to visually separate it from the content.
 C4 - The date-input fields in the filter pane are too long in width and eppear weird and off-center. Figure out a way to fix that.
 C5 - The date-input fields in the filter pane should have bolder text when not empty.
 C6 - Have the borders of adjacent records appear united, with only the top and bottom corners of the entire list - rounded. When a row is "active" and divides the list in 2 by spacing itself out from the rest, then there will be two individual groups with that style - above the active row and below it.
 C7 - Add a very subtle gradient to the background of the record-container.
 C8 - Add a very subtle gradient to the background of the header.
-[Done] C9 - Instead of abruptly changing the "display" of the modify buttons, use an animated "opacity" property instead.
+C9 [Done] - Instead of abruptly changing the "display" of the modify buttons, use an animated "opacity" property instead.
