@@ -286,7 +286,7 @@ function removeActive() {
 }
 
 function setActive(row) {
-  removeActive();
+  removeActive(); // Removing the 'active' state from any element that may currently have it
   row.classList.add('record-row-active');
 }
 

@@ -11,6 +11,7 @@ F9 - Enable sorting functionality
 F10 - Add placeholders of the input fields when creating a new record.
 F11 - Add a "Clear" button next to every filtering input field in order to make it easier for users to reset. In fact, add a whole "Reset All" button.
 F12 - When searching, make it possible to spell special letters with diacritics by using their simpler alternatives. For example, searching for "Nis" to also yield results for "Niš".
+F13 - For the search box, add checkbox options to search by only one or two of the columns, as opposed to ANY of the three.
 
 COSMETIC
 C1 - Animate the bottom border of active/focused input fields. Make the line expand outwards from the center.
