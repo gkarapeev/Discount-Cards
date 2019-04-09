@@ -56,12 +56,15 @@ if (localStorage.discountCards) {
 }
 
 // GENERATE HTML ELEMENTS FROM THE DATA ****************************************
-function showList() {
+function showList(array) {
 
-  for (let i = recordData.length - 1; i >= 0; i--) {
+  // Clear any content before populating with new
+  record_cont.innerHTML = '';
+
+  for (let i = array.length - 1; i >= 0; i--) {
     let rowData = [];
 
-    for (field in recordData[i]) {
+    for (field in array[i]) {
       rowData.push(recordData[i][field]);
     }
 
@@ -98,7 +101,7 @@ function showList() {
   }
 }
 
-showList();
+showList(recordData);
 
 // CREATE RECORD ***************************************************************
 function insertRow() {
@@ -464,3 +467,16 @@ function applyFilter() {
 }
 
 // SORT ************************************************************************
+// First, before making ANY mess, let's make a function that will take care of it.
+// More specifically, a function that resets the order of recordData to its default.
+
+
+
+// function yanko() {let sortedData = recordData;
+
+// let tempElem = sortedData[3];
+// sortedData[3] = sortedData[0];
+// sortedData[0] = tempElem;
+
+// recordData = sortedData;
+// showList(recordData);}
