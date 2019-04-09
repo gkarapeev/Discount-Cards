@@ -469,20 +469,83 @@ function applyFilter() {
 }
 
 // SORT ************************************************************************
-// First, before making ANY mess, let's make a function that will take care of it.
-// More specifically, a function that resets the order of recordData to its default.
-function resetView() {
+
+// Restoring the original order of the data. Called after each sort.
+function restoreOrder() {
   recordData = JSON.parse(localStorage.discountCards);
-  showList(recordData);
 }
 
-function dummyFilter() {
-  let sortedData = recordData;
+// Initialize sort direction counters
+let sortCounters = {
+  name: 0,
+  city: 0,
+  num: 0
+}
 
-  let tempElem = sortedData[3];
-  sortedData[3] = sortedData[0];
-  sortedData[0] = tempElem;
+// The sort function
+let sortData = function(criteria) {
 
-  recordData = sortedData;
+  // 1. Reset other counters
+  // 1.1 Define how
+  function resetCounters(a, b) {
+    sortCounters[a] = 0;
+    sortCounters[b] = 0;
+  }
+
+  // 1.2 Define which
+  switch (criteria) {
+    case 'name':
+      resetCounters('city', 'num');
+      break;
+    
+    case 'city':
+      resetCounters('name', 'num');
+      break;
+    
+    case 'num':
+      resetCounters('name', 'city');
+      break;
+    
+    default:
+    break;
+  }
+
+  // 2. Increment the counter
+  sortCounters[criteria]++;
+
+  // 3. Loop the counter if needed
+  if (sortCounters[criteria] === 3) {
+    sortCounters[criteria] = 0;
+  }
+
+  // 4. Define the sort direction based on counter value
+  let direction = (sortCounters[criteria] === 2) ? -1 : 1;
+
+  // 5. Define how the objects will be sorted
+  function compare(a, b) {
+    if (a[criteria] < b[criteria]) {
+      return -1 * direction;
+    }
+
+    if (a[criteria] > b[criteria]) {
+      return 1 * direction;
+    }
+
+    return 0;
+  }
+  
+  // 6. If counter isn't ZERO, perform the sort
+  if (sortCounters[criteria] !== 0) {
+    recordData.sort(compare);
+  
+  } else {
+    // 7. Else, restore the recordData to its original order
+    restoreOrder();
+  }
+  
+  // 8. Display the sorted result
   showList(recordData);
+
+  // 9. Apply any active filters
+  applyFilter();
 }

@@ -7,7 +7,7 @@ F5 - Remove the "Card Number" input field when creating/editing a record and hav
 F6 - Replace the "Category", "Accumulation", "Discount", and "Expiry Date" text input fields with ones of the appropriate type.
 F7 [Done] - Enable search functionality
 F8 [Done] - Enable filtering functionality
-F9 - Enable sorting functionality
+F9 [Done] - Enable sorting functionality
 F10 - Add placeholders of the input fields when creating a new record.
 F11 - Add a "Clear" button next to every filtering input field in order to make it easier for users to reset. In fact, add a whole "Reset All" button.
 F12 - When searching, make it possible to spell special letters with diacritics by using their simpler alternatives. For example, searching for "Nis" to also yield results for "Niš".

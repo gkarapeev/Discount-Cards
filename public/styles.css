@@ -493,8 +493,8 @@ header {
 }
 
 .record-row-active .button {
-  transition-delay: 1s;
-  transition: opacity 1s;
+  transition-delay: 0.3s;
+  transition: opacity 0.3s;
   opacity: 1;
   height: 93%;
   color: white;
