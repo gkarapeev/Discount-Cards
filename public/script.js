@@ -469,14 +469,18 @@ function applyFilter() {
 // SORT ************************************************************************
 // First, before making ANY mess, let's make a function that will take care of it.
 // More specifically, a function that resets the order of recordData to its default.
+function resetView() {
+  recordData = JSON.parse(localStorage.discountCards);
+  showList(recordData);
+}
 
+function dummyFilter() {
+  let sortedData = recordData;
 
+  let tempElem = sortedData[3];
+  sortedData[3] = sortedData[0];
+  sortedData[0] = tempElem;
 
-// function yanko() {let sortedData = recordData;
-
-// let tempElem = sortedData[3];
-// sortedData[3] = sortedData[0];
-// sortedData[0] = tempElem;
-
-// recordData = sortedData;
-// showList(recordData);}
+  recordData = sortedData;
+  showList(recordData);
+}
