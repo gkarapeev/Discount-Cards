@@ -280,7 +280,7 @@ function saveRow(button, isNew) {
                               </div>`;
 }
 
-// ACTIVE STATE ****************************************************************
+// ROW ACTIVE STATE ************************************************************
 function removeActive() {
   let active_element = document.querySelector('.record-row-active');
   if (active_element) {
@@ -294,6 +294,9 @@ function setActive(row) {
   // Add the active state to this row
   row.classList.add('record-row-active');
 }
+
+// SORT WORD ACTIVE STATE ******************************************************
+
 
 // Remove active state by clicking anywhere other than .record-row or .new-record
 document.addEventListener('click', function () {
@@ -487,7 +490,18 @@ let sortCounters = {
 }
 
 // The sort function
-let sortData = function(criteria) {
+let sortData = function(colTitle, criteria) {
+
+  // 0. Highlight the title of the sorted column
+  // 0.1 Remove active class from all column titles
+  let allTitles = colTitle.parentNode.parentNode.children;
+
+  for (let c = 0; c < allTitles.length - 1; c++) {
+    allTitles[c].firstChild.classList.remove('sort-word-active');
+  }
+
+  // 0.2 Add the class to the row being sorted
+  colTitle.classList.add('sort-word-active');
 
   // 1. Reset other sort-direction counters to zero
 
