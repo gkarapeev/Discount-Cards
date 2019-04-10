@@ -165,7 +165,10 @@ function deleteRow(button) {
   let confirmed = confirm('Confirm record deletion?');
   if (confirmed) {
     let row = button.parentNode.parentNode;
-    let rows = Array.prototype.slice.call(record_cont.children); // No bloody clue how this gets the count of children elements, but YOLO, I need to get things done!
+    // Because .children doesn't return an array as such. It returns a 'collection'.
+    // slice() is then borrowed from the array prototype in order to cast
+    // that collection into a regular array object.
+    let rows = Array.prototype.slice.call(record_cont.children);
 
     // Updating the database  
     // First, update the recordData
@@ -182,7 +185,7 @@ function deleteRow(button) {
 function editRow(button) {
 
   let row = button.parentNode.parentNode;
-  let rows = Array.prototype.slice.call(record_cont.children); // No bloody clue how this gets the count of children elements, but YOLO, I need to get things done!
+  let rows = Array.prototype.slice.call(record_cont.children);
   let thisRecord = recordData[rows.indexOf(row)]; // making an object which is identical to the database entry with the same index as the index of this row in the table. I'll need to actually generate unique record ID's if I don't do this, but I'm not ready to go there yet! :D
 
   //edits will go here
@@ -236,7 +239,7 @@ function enableSaveOnEnter() {
 // SAVE RECORD
 function saveRow(button, isNew) {
   let row = button.parentNode.parentNode;
-  let rows = Array.prototype.slice.call(record_cont.children); // No bloody clue how this gets the count of children elements, but YOLO, I need to get things done!
+  let rows = Array.prototype.slice.call(record_cont.children);
   let newValues = [];
 
   // Write the new values to an array
@@ -255,13 +258,14 @@ function saveRow(button, isNew) {
     'num': newValues[6]
   }
 
-  // Update the corresponding recordData entry
-
+  // If it's a new record, insert it at the fron of recordData
   if (isNew) {
     recordData.unshift(newRecord);
     localStorage.discountCards = JSON.stringify(recordData);
   } else {
+    // Else overwrite the corresponding index of recordData
     recordData[rows.indexOf(row.parentNode)] = newRecord;
+    // And update localStorage to match
     localStorage.discountCards = JSON.stringify(recordData);
   }
 
