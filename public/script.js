@@ -185,6 +185,7 @@ function editRow(button) {
   let rows = Array.prototype.slice.call(record_cont.children); // No bloody clue how this gets the count of children elements, but YOLO, I need to get things done!
   let thisRecord = recordData[rows.indexOf(row)]; // making an object which is identical to the database entry with the same index as the index of this row in the table. I'll need to actually generate unique record ID's if I don't do this, but I'm not ready to go there yet! :D
 
+  //edits will go here
   let editForm = `<form name="edit-form" onsubmit="event.preventDefault();"><div class="record-field name"><input type="text" value="${thisRecord.name}"></div>
                     <div class="record-field city"><input type="text" value="${thisRecord.city}"></div>
                     <div class="record-field category"><input type="text" value="${thisRecord.category}"></div>
