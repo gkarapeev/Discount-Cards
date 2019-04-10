@@ -575,9 +575,6 @@ let sortData = function(colTitle, criteria) {
     // 7.2 Apply any active filters
     applyFilter();
 
-    // 7.3 Restore original order
-    restoreOrder();
-
   } else {
     // 8.1 Else, restore the recordData to its original order
     restoreOrder();
