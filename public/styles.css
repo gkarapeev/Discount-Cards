@@ -419,6 +419,7 @@ header {
 
 .container-sort > div:last-child:hover {
   background-color: #009688;
+  cursor: initial;
 }
 
 .sort-word-active {
