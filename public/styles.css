@@ -424,6 +424,10 @@ header {
   border-left: 7px solid transparent;
 }
 
+.sort-word-inverted::after {
+  transform: translateY(0) rotate(225deg);
+}
+
 .record-row {
   display: grid;
   grid-template-columns: 4fr 2fr 2fr 2fr 2fr 3fr 3fr 2fr;

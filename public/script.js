@@ -492,17 +492,6 @@ let sortCounters = {
 // The sort function
 let sortData = function(colTitle, criteria) {
 
-  // 0. Highlight the title of the sorted column
-  // 0.1 Remove active class from all column titles
-  let allTitles = colTitle.parentNode.parentNode.children;
-
-  for (let c = 0; c < allTitles.length - 1; c++) {
-    allTitles[c].firstChild.classList.remove('sort-word-active');
-  }
-
-  // 0.2 Add the class to the row being sorted
-  colTitle.classList.add('sort-word-active');
-
   // 1. Reset other sort-direction counters to zero
 
   // 1.1 List all the counters
@@ -524,13 +513,32 @@ let sortData = function(colTitle, criteria) {
     sortCounters[criteria] = 0;
   }
 
-  // 4. Define the sort direction based on counter value
+  // 4. Display sort indication via CSS classes
+  // 4.1 Remove active class from all column titles
+  let allTitles = colTitle.parentNode.parentNode.children;
+
+  for (let c = 0; c < allTitles.length - 1; c++) {
+    allTitles[c].firstChild.classList.remove('sort-word-active');
+    allTitles[c].firstChild.classList.remove('sort-word-inverted');
+  }
+
+  // 4.2 Add the class to the row being sorted, based on counter index
+  if (sortCounters[criteria] !== 0) {
+    colTitle.classList.add('sort-word-active');
+
+    //4.3 
+    if (sortCounters[criteria] === 2) {
+      colTitle.classList.add('sort-word-inverted');
+    }
+  }
+
+  // 5. Define the sort direction based on counter value
   let direction = (sortCounters[criteria] === 2) ? -1 : 1;
 
-  // 5. Define how the objects will be sorted
+  // 6. Define how the objects will be sorted
   function compare(a, b) {
 
-    // 5.1 If it's a date field, cast the strings into Date objects
+    // 6.1 If it's a date field, cast the strings into Date objects
     if (criteria === 'expiry') {
       let date_a = new Date(a[criteria]);
       let date_b = new Date(b[criteria]);
@@ -544,7 +552,7 @@ let sortData = function(colTitle, criteria) {
       }
 
     } else {
-    // 5.2 Else, just take the values as they are
+    // 6.2 Else, just take the values as they are
       if (a[criteria] < b[criteria]) {
         return -1 * direction;
       }
@@ -557,27 +565,27 @@ let sortData = function(colTitle, criteria) {
     return 0;
   }
   
-  // 6. If counter isn't ZERO, perform the sort
+  // 7. If counter isn't ZERO, perform the sort
   if (sortCounters[criteria] !== 0) {
     recordData.sort(compare);
 
-    // 6.1 Display the sorted result
+    // 7.1 Display the sorted result
     showList(recordData);
 
-    // 6.2 Apply any active filters
+    // 7.2 Apply any active filters
     applyFilter();
 
-    // 6.3 Restore original order
+    // 7.3 Restore original order
     restoreOrder();
 
   } else {
-    // 7.1 Else, restore the recordData to its original order
+    // 8.1 Else, restore the recordData to its original order
     restoreOrder();
 
-    // 7.2 Display the UNsorted result
+    // 8.2 Display the UNsorted result
     showList(recordData);
 
-    // 7.3 Apply any active filters
+    // 8.3 Apply any active filters
     applyFilter();
   }
 }
