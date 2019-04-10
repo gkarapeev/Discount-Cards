@@ -397,18 +397,32 @@ header {
   display: grid;
   grid-template-columns: 4fr 2fr 2fr 2fr 2fr 3fr 3fr 2fr;
   padding: 0 25px 0 25px;
-  /* sides hava to match .record-row */
+  /* padding sides have to match .record-row - line 436 */
   font-weight: 500;
   font-size: 0.9em;
-  color: #909090;
+  color: #a3e4dd;
+  background-color: #009688;
+  border-radius: 4px;
 }
 
-.sort-word {
-  margin-right: 25px;
+.container-sort > div {
+  padding: 10px 0 10px 10px;
+  cursor: pointer;
+  margin-left: -10px;
+  margin-right: 10px;
+  transition: background-color 0.2s;
+}
+
+.container-sort > div:hover {
+  background-color: #04aa99;
+}
+
+.container-sort > div:last-child:hover {
+  background-color: #009688;
 }
 
 .sort-word-active {
-  color: #009688;
+  color: white;
   position: relative;
 }
 
@@ -420,15 +434,19 @@ header {
   right: -15px;
   width: 0;
   height: 0;
-  border-bottom: 7px solid #009688;
+  border-bottom: 7px solid white;
   border-left: 7px solid transparent;
+}
+
+.sort-word-inverted::after {
+  transform: translateY(0) rotate(225deg);
 }
 
 .record-row {
   display: grid;
   grid-template-columns: 4fr 2fr 2fr 2fr 2fr 3fr 3fr 2fr;
   padding: 0 25px 0 25px;
-  /* sides hava to match .container-sort */
+  /* padding sides have to match .container-sort - line 400 */
   background: #ffffff;
   border-radius: 3px;
   border: 1px solid rgba(0, 0, 0, 0.068);
@@ -493,8 +511,8 @@ header {
 }
 
 .record-row-active .button {
-  transition-delay: 1s;
-  transition: opacity 1s;
+  transition-delay: 0.3s;
+  transition: opacity 0.3s;
   opacity: 1;
   height: 93%;
   color: white;
