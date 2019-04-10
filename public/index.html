@@ -15,7 +15,7 @@
   <section><!-- #region [rgba(0, 150, 136, 0.1)] -->
     <header>
       <div class="container-header">
-        <div class="brand">
+        <div class="brand" onclick="resetData()">
           <svg class="brand-img" version="1.1" id="Layer_3" xmlns="http://www.w3.org/2000/svg"
             xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 100 100"
             xml:space="preserve">
@@ -153,14 +153,14 @@
     <div class="new-record" onclick="insertRow();"><span>+</span></div>
     <div class="container-body">
       <div class="container-sort"><!-- #region [rgba(43, 15, 15, 1)] -->
-        <div class="sort-word"><span onclick="sortData(this, 'name')">Name</span></div>
-        <div class="sort-word"><span onclick="sortData(this, 'city')">City</span></div>
-        <div class="sort-word"><span onclick="sortData(this, 'category')">Category</span></div>
-        <div class="sort-word"><span onclick="sortData(this, 'accu')">Acc.</span></div>
-        <div class="sort-word"><span onclick="sortData(this, 'discount')">Discount</span></div>
-        <div class="sort-word"><span onclick="sortData(this, 'expiry')">Expiry Date</span></div>
-        <div class="sort-word"><span onclick="sortData(this, 'num')">Card Number #</span></div>
-        <div class="sort-word">Modify</div>
+        <div class="sort-word" onclick="sortData(this.firstChild, 'name')"><span>Name</span></div>
+        <div class="sort-word" onclick="sortData(this.firstChild, 'city')"><span>City</span></div>
+        <div class="sort-word" onclick="sortData(this.firstChild, 'category')"><span>Category</span></div>
+        <div class="sort-word" onclick="sortData(this.firstChild, 'accu')"><span>Acc.</span></div>
+        <div class="sort-word" onclick="sortData(this.firstChild, 'discount')"><span>Discount</span></div>
+        <div class="sort-word" onclick="sortData(this.firstChild, 'expiry')"><span>Expiry Date</span></div>
+        <div class="sort-word" onclick="sortData(this.firstChild, 'num')"><span>Card Number #</span></div>
+        <div>Modify</div>
       </div><!-- #endregion -->
 
       <div class="container-records"><!-- #region [rgba(0, 0, 0, 0.6)] -->

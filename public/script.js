@@ -1,4 +1,6 @@
 // GLOBAL VARIABLES ************************************************************
+// 0. RECORD DATA
+var recordData;
 // 1. FILTERS
 // 1.1 Filters - Percent Checkboxes
 var checkBox_5 = document.getElementById('percent-5');
@@ -41,18 +43,29 @@ var Record = function (name, city, category, accu, discount, expiry, num) {
 }
 
 // INITIALIZE DATABASE *********************************************************
-// 1. Check if it exists in localStorage
-if (localStorage.discountCards) {
-  var recordData = JSON.parse(localStorage.discountCards);
-// 2. If not, generate some example data and store it locally
-} else {
+// 0. Enable creation of localStorage a entry
+var createDB = function() {
   var georgi = new Record('Georgi Karapeev', 'Sofia', 'Books', 'No', 5, new Date(2019, 3, 5), 2005050419);
   var marko = new Record('Marko Popovic', 'Niš', 'Cosmetics', 'Yes', 30, new Date(2019, 4, 5), 1130050519);
   var vlada = new Record('Vladan Petrovic', 'Niš', 'Services', 'No', 10, new Date(2019, 5, 5), 4010050619);
   var tsvyatko = new Record('Tsvyatko Ivanov', 'Plovdiv', 'Accessories', 'Yes', 20, new Date(2019, 6, 5), 3120050719);
-  var recordData = [georgi, marko, vlada, tsvyatko];
+  recordData = [georgi, marko, vlada, tsvyatko];
   
   localStorage.discountCards = JSON.stringify(recordData);
+}
+// 1. Check if 'discountCards' exists in localStorage
+if (localStorage.discountCards) {
+  recordData = JSON.parse(localStorage.discountCards);
+// 2. If not, generate it
+} else {
+  createDB();
+  showList(recordData);
+}
+// 3. Reset function
+var resetData = function() {
+  localStorage.removeItem('discountCards');
+  createDB();
+  showList(recordData);
 }
 
 // GENERATE HTML ELEMENTS FROM THE DATA ****************************************
