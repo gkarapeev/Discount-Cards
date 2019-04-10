@@ -36,6 +36,7 @@ header {
   text-transform: uppercase;
   font-weight: 600;
   font-size: 0.8rem;
+  cursor: pointer;
 }
 
 .brand-img {
@@ -463,8 +464,9 @@ header {
 } */
 
 .row-edit {
-  background-color: #eaf2f5;
+  background-color: #97a5a4; /* has to match .row-edit:hover on line 561 */
   display: flex !important;
+  transition: background-color 0.15s;
 }
 
 .row-edit form {
@@ -549,16 +551,21 @@ header {
   margin: 0;
   width: 90%;
   font-size: 1.1rem;
+  transition: background-color 0.15s;
 }
 
 .record-field input:focus {
-  background-color: #ffffff;
+  background-color: #faefdd;
   outline: none;
-  border-bottom: 2px solid #009688;
 }
 
 .row-edit:hover {
-  background-color: #eaf2f5;
+  background-color: #97a5a4; /* has to match .row-edit on line 466 */
+}
+
+.row-edit .button-edit {
+  background-color: #c7eed9;
+  color: #3e4d4b;
 }
 
 /* ------------------------------------------------- */
