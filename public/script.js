@@ -191,6 +191,17 @@ function deleteRow(button) {
   }
 }
 
+// VALIDATE NAME AND CITY ******************************************************
+let validate = function(field) {
+  let pattern = /[$&+,:;=?@#|'<>.^*()%!0-9]/;
+
+  if (field.value.match(pattern)) {
+    field.classList.add('invalid');
+  } else {
+    field.classList.remove('invalid');
+  }
+}
+
 // EDIT RECORD *****************************************************************
 function editRow(button) {
 
@@ -255,8 +266,8 @@ function editRow(button) {
   thisRecord.accu === 'Yes' ? checkbox_state = 'checked' : checkbox_state = '';
 
   // Generate the HTML
-  let editForm = `<form name="edit-form" onsubmit="event.preventDefault();"><div class="record-field name"><input type="text" value="${thisRecord.name}"></div>
-                    <div class="record-field city"><input type="text" value="${thisRecord.city}"></div>
+  let editForm = `<form name="edit-form" onsubmit="event.preventDefault();"><div class="record-field name"><input type="text" value="${thisRecord.name}" onfocusout="validate(this)"></div>
+                    <div class="record-field city"><input type="text" value="${thisRecord.city}" onfocusout="validate(this)"></div>
                     <div class="record-field category">
                       <select onchange="refreshNum(this)">
                         <option value="Cosmetics" ${options_cat[0]}>Cosmetics</option>
@@ -392,7 +403,7 @@ function refreshNum(field) {
   cardNumberField.children[0].innerHTML = generateCardNum(rowValues);
 }
 
-// SAVE RECORD
+// SAVE RECORD *****************************************************************
 function saveRow(button, isNew) {
   let form = button.parentNode.parentNode;
   let rows = Array.prototype.slice.call(record_cont.children);
