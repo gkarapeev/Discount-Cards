@@ -46,10 +46,20 @@ var Record = function (name, city, category, accu, discount, expiry, num) {
 // 0. Enable creation of localStorage a entry
 var createDB = function() {
   var georgi = new Record('Georgi Karapeev', 'Sofia', 'Books', 'No', 5, new Date(2019, 3, 5), 2005050419);
+  var georgi_2 = new Record('Georgi Karapeev', 'Sofia', 'Cosmetics', 'Yes', 20, new Date(2019, 11, 7), 2120071220);
   var marko = new Record('Marko Popovic', 'Niš', 'Cosmetics', 'Yes', 30, new Date(2019, 4, 5), 1130050519);
+  var marko_2 = new Record('Marko Popovic', 'Niš', 'Books', 'Yes', 5, new Date(2022, 8, 17), 2005170922);
   var vlada = new Record('Vladan Petrovic', 'Niš', 'Services', 'No', 10, new Date(2019, 5, 5), 4010050619);
+  var vlada_2 = new Record('Vladan Petrovic', 'Niš', 'Services', 'Yes', 20, new Date(2020, 0, 1), 3120010120);
   var tsvyatko = new Record('Tsvyatko Ivanov', 'Plovdiv', 'Accessories', 'Yes', 20, new Date(2019, 6, 5), 3120050719);
-  recordData = [georgi, marko, vlada, tsvyatko];
+  var tsvyatko_2 = new Record('Tsvyatko Ivanov', 'Plovdiv', 'Books', 'No', 30, new Date(2018, 1, 26), 2030260218);
+  var ani = new Record('Anita Andreeva', 'Plovdiv', 'Books', 'No', 10, new Date(2018, 1, 10), 2010100218);
+  var ani_2 = new Record('Anita Andreeva', 'Plovdiv', 'Cosmetics', 'No', 30, new Date(2016, 1, 28), 1030280216);
+  var toni = new Record('Anton Cholakov', 'Plovdiv', 'Services', 'Yes', 10, new Date(2018, 3, 14), 4110140418);
+  var toni_2 = new Record('Anton Cholakov', 'Plovdiv', 'Accessories', 'Yes', 20, new Date(2007, 1, 07), 3120070207);
+  var peter = new Record('Peter Yochev', 'Plovdiv', 'Books', 'No', 30, new Date(2076, 6, 13), 2030130776);
+  var peter_2 = new Record('Peter Yochev', 'Plovdiv', 'Services', 'No', 5, new Date(2019, 8, 21), 4005210919);
+  recordData = [georgi, georgi_2, marko, marko_2, vlada, vlada_2, tsvyatko, tsvyatko_2, ani, ani_2, toni, toni_2, peter, peter_2];
   
   localStorage.discountCards = JSON.stringify(recordData);
 }
@@ -165,7 +175,10 @@ function deleteRow(button) {
   let confirmed = confirm('Confirm record deletion?');
   if (confirmed) {
     let row = button.parentNode.parentNode;
-    let rows = Array.prototype.slice.call(record_cont.children); // No bloody clue how this gets the count of children elements, but YOLO, I need to get things done!
+    // Because .children doesn't return an array as such. It returns a 'collection'.
+    // slice() is then borrowed from the array prototype in order to cast
+    // that collection into a regular array object.
+    let rows = Array.prototype.slice.call(record_cont.children);
 
     // Updating the database  
     // First, update the recordData
@@ -182,15 +195,94 @@ function deleteRow(button) {
 function editRow(button) {
 
   let row = button.parentNode.parentNode;
-  let rows = Array.prototype.slice.call(record_cont.children); // No bloody clue how this gets the count of children elements, but YOLO, I need to get things done!
+  let rows = Array.prototype.slice.call(record_cont.children);
   let thisRecord = recordData[rows.indexOf(row)]; // making an object which is identical to the database entry with the same index as the index of this row in the table. I'll need to actually generate unique record ID's if I don't do this, but I'm not ready to go there yet! :D
 
+  // A way to generate UTC dates
+  function createDateAsUTC(date) {
+    return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+  }
+
+  // Finding which values to select for the 'category' and 'percent' <select> elements
+  // 1. Arrays to hold the 'selected' state of all 4 options for both elenents - initially all are blank
+  let options_cat = ['', '', '', ''];
+  let options_perc = ['', '', '', ''];
+  // 2. Adding 'selected' state to the correct 'category' <select> element
+  switch (thisRecord.category) {
+    case 'Cosmetics':
+      options_cat[0] = 'selected';
+      break;
+    
+    case 'Books':
+      options_cat[1] = 'selected';
+      break;
+    
+    case 'Accessories':
+      options_cat[2] = 'selected';
+      break;
+    
+    case 'Services':
+      options_cat[3] = 'selected';
+      break;
+    
+    default:
+    break;
+  }
+  // 3. Adding 'selected' state to the correct 'percent' <select> element
+  switch (thisRecord.discount) {
+    case 5:
+      options_perc[0] = 'selected';
+      break;
+    
+    case 10:
+      options_perc[1] = 'selected';
+      break;
+    
+    case 20:
+      options_perc[2] = 'selected';
+      break;
+    
+    case 30:
+      options_perc[3] = 'selected';
+      break;
+    
+    default:
+    break;
+  }
+
+  // Setting the correct 'accumulation' checkbox value
+  let checkbox_state;
+  thisRecord.accu === 'Yes' ? checkbox_state = 'checked' : checkbox_state = '';
+
+  // Generate the HTML
   let editForm = `<form name="edit-form" onsubmit="event.preventDefault();"><div class="record-field name"><input type="text" value="${thisRecord.name}"></div>
                     <div class="record-field city"><input type="text" value="${thisRecord.city}"></div>
-                    <div class="record-field category"><input type="text" value="${thisRecord.category}"></div>
-                    <div class="record-field accumulation"><input type="text" value="${thisRecord.accu}"></div>
-                    <div class="record-field d-percent"><input type="text" value="${thisRecord.discount}"></div>
-                    <div class="record-field exp-date"><input type="text" value="${thisRecord.expiry}"></div>
+                    <div class="record-field category">
+                      <select>
+                        <option value="Cosmetics" ${options_cat[0]}>Cosmetics</option>
+                        <option value="Books" ${options_cat[1]}>Books</option>
+                        <option value="Accessories" ${options_cat[2]}>Accessories</option>
+                        <option value="Services" ${options_cat[3]}>Services</option>
+                      </select>
+                    </div>
+                    <div id="edit-accu" class="record-field accumulation">
+                      <label class="cbox-label" for="accumulation">
+                        <input type="checkbox" id="accumulation" name="accumulation" ${checkbox_state}></input>
+                        <div class="checkmark"></div>
+                        Accu.
+                      </label>
+                    </div>
+                    <div class="record-field d-percent">
+                      <select>
+                        <option value="5" ${options_perc[0]}>5%</option>
+                        <option value="10" ${options_perc[1]}>10%</option>
+                        <option value="20" ${options_perc[2]}>20%</option>
+                        <option value="30" ${options_perc[3]}>30%</option>
+                      </select>
+                    </div>
+                    <div class="record-field exp-date">
+                      <input type="date" value="${createDateAsUTC(new Date(thisRecord.expiry)).toISOString().slice(0,10)}">
+                    </div>
                     <div class="record-field card-num"><input type="text" value="${thisRecord.num}"></div>
                     <div class="record-field modify">
                       <div class="button button-edit button-save" onclick="saveRow(this);">OK</div>
@@ -235,13 +327,30 @@ function enableSaveOnEnter() {
 // SAVE RECORD
 function saveRow(button, isNew) {
   let row = button.parentNode.parentNode;
-  let rows = Array.prototype.slice.call(record_cont.children); // No bloody clue how this gets the count of children elements, but YOLO, I need to get things done!
+  let rows = Array.prototype.slice.call(record_cont.children);
   let newValues = [];
-
   // Write the new values to an array
   for (let i = 0; i < row.children.length; i++) {
     newValues.push(row.children[i].children[0].value);
+
+    // For the checkbox, gotta dig 1 element deeper and get the checkbox state
+    if (i === 3) {
+      let value = row.children[3].children[0].children[0].checked;
+      // And overwrite the 'undefined' value which will have inevitably been written to newValues[3]
+      newValues[3] = value ? 'Yes' : 'No';
+    }
+
+    //For the percent field, cast the string from the element value to a number
+    if (i === 4 ) {
+      newValues[4] = parseInt(row.children[4].children[0].value);
+    }
   }
+
+  // Format the date properly
+  let dateArr = newValues[5].split('-');
+  dateArr[1] = parseInt(dateArr[1]) - 1;
+  let tempDate = new Date(...dateArr);
+  let theDate = tempDate.toLocaleDateString('en-GB', myDateFormat);
 
   // Write the values of newValues to an object
   let newRecord = {
@@ -250,17 +359,18 @@ function saveRow(button, isNew) {
     'category': newValues[2],
     'accu': newValues[3],
     'discount': newValues[4],
-    'expiry': newValues[5],
+    'expiry': theDate,
     'num': newValues[6]
   }
 
-  // Update the corresponding recordData entry
-
+  // If it's a new record, insert it at the fron of recordData
   if (isNew) {
     recordData.unshift(newRecord);
     localStorage.discountCards = JSON.stringify(recordData);
   } else {
+    // Else overwrite the corresponding index of recordData
     recordData[rows.indexOf(row.parentNode)] = newRecord;
+    // And update localStorage to match
     localStorage.discountCards = JSON.stringify(recordData);
   }
 
@@ -272,7 +382,7 @@ function saveRow(button, isNew) {
                               <div class="record-field category">${newValues[2]}</div>
                               <div class="record-field accumulation">${newValues[3]}</div>
                               <div class="record-field d-percent">${newValues[4]}%</div>
-                              <div class="record-field exp-date">${newValues[5]}</div>
+                              <div class="record-field exp-date">${theDate}</div>
                               <div class="record-field card-num">${newValues[6]}</div>
                               <div class="record-field modify">
                                 <div class="button button-edit" onclick="editRow(this);">Edit</div>
@@ -599,3 +709,6 @@ let sortData = function(colTitle, criteria) {
     applyFilter();
   }
 }
+
+// Sort by name on startup so that a sort indicator is visible
+sortData(document.querySelector('.container-sort').children[0].children[0], 'name');

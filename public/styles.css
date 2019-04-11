@@ -36,6 +36,7 @@ header {
   text-transform: uppercase;
   font-weight: 600;
   font-size: 0.8rem;
+  cursor: pointer;
 }
 
 .brand-img {
@@ -335,9 +336,9 @@ header {
 /* BODY CONTAINER -------------------- */
 
 .new-record {
-  position: absolute;
+  position: fixed;
   bottom: 3%;
-  right: 2%;
+  right: 1%;
   height: 50px;
   width: 50px;
   border-radius: 50%;
@@ -415,10 +416,12 @@ header {
 
 .container-sort > div:hover {
   background-color: #04aa99;
+  color: white;
 }
 
 .container-sort > div:last-child:hover {
   background-color: #009688;
+  cursor: initial;
 }
 
 .sort-word-active {
@@ -460,17 +463,6 @@ header {
 /* .modify {
   justify-content: center;
 } */
-
-.row-edit {
-  background-color: #eaf2f5;
-  display: flex !important;
-}
-
-.row-edit form {
-  display: grid;
-  grid-template-columns: 4fr 2fr 2fr 2fr 2fr 3fr 3fr 2fr;
-  margin: 0 -10px 0 -10px;
-}
 
 .record-row-active {
   border: none;
@@ -535,33 +527,6 @@ header {
   background-color: #f4f8ff;
 }
 
-/* EDIT MODE --------------------------------- */
-
-.record-field input {
-  height: 100%;
-  border: none;
-  background-color: #ffffff;
-  border-radius: 3px;
-  font-size: 0.9rem;
-  padding: 10px;
-  box-sizing: border-box;
-  margin: 0;
-  width: 90%;
-  font-size: 1.1rem;
-}
-
-.record-field input:focus {
-  background-color: #ffffff;
-  outline: none;
-  border-bottom: 2px solid #009688;
-}
-
-.row-edit:hover {
-  background-color: #eaf2f5;
-}
-
-/* ------------------------------------------------- */
-
 .button-edit {
   margin-right: 10px;
   padding-top: 1px;
@@ -581,4 +546,82 @@ header {
 
 .record-row-active .st0 {
   fill: #f5f5f5;
+}
+
+/* EDIT MODE --------------------------------- */
+.row-edit {
+  background-color: #97a5a4; /* has to match .row-edit:hover on line 583 */
+  display: flex !important;
+  transition: background-color 0.15s;
+}
+
+.row-edit form {
+  display: grid;
+  grid-template-columns: 4fr 2fr 2fr 2fr 2fr 3fr 3fr 2fr;
+  margin: 0 -10px 0 -10px;
+}
+.record-field input {
+  height: 100%;
+  border: none;
+  background-color: #ffffff;
+  border-radius: 3px;
+  font-size: 0.9rem;
+  padding: 10px;
+  box-sizing: border-box;
+  margin: 0;
+  width: 90%;
+  font-size: 1.1rem;
+  transition: background-color 0.15s;
+}
+
+.record-field input:focus {
+  background-color: #faefdd;
+  outline: none;
+}
+
+.row-edit:hover {
+  background-color: #97a5a4; /* has to match .row-edit on line 553 */
+}
+
+.row-edit .button-edit {
+  background-color: #c7eed9;
+  color: #3e4d4b;
+}
+
+.row-edit select {
+  height: 100%;
+  width: 90%;
+  font-size: 1em;
+  padding-left: 10px;
+  position: relative;
+  display: flex;
+  align-content: center;
+  /*roundness*/
+  border: 0;
+  -webkit-appearance: none;
+  border-radius: 3px;
+  -webkit-border-radius: 3px;
+  /*background*/
+  background-color: white;
+  background-image: url('../img/select-arrows.svg');
+  background-repeat: no-repeat;
+  background-position: 98% 50%;
+  background-size: 14px;
+}
+
+.row-edit select:focus {
+  background-color: #faefdd;
+}
+
+#edit-accu {
+  background-color: white;
+  border-radius: 3px;
+  padding-left: 10px;
+  margin-right: 10px;
+}
+
+.row-edit input[type='date'] {
+  font-size: 1em;
+  font-family: 'Roboto', sans-serif;
+  font-weight: inherit;
 }
