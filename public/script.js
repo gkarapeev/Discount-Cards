@@ -134,33 +134,54 @@ function insertRow() {
 
   // Define the HTML content of the new row
   var newRow = `<div class="record-row row-edit record-row-active" onclick="setActive(this);">
-                  <form name="edit-form" onsubmit="preventDefault();">
-                    <div class="record-field name"><input type="text" value=""></div>
-                    <div class="record-field city"><input type="text" value=""></div>
-                    <div class="record-field category"><input type="text" value=""></div>
-                    <div class="record-field accumulation"><input type="text" value=""></div>
-                    <div class="record-field d-percent"><input type="text" value=""></div>
-                    <div class="record-field exp-date"><input type="text" value=""></div>
-                    <div class="record-field card-num"><input type="text" value=""></div>
-                    <div class="record-field modify">
-                      <div class="button button-edit button-save" onclick="saveRow(this, true);">OK</div>
-                      <div class="button button-del">
-                          <svg version="1.1" class="bin-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                            viewBox="0 0 32 32" xml:space="preserve">
-                            <style type="text/css">
-                            .st0{fill:#F5F5F5;}
-                            </style>
-                            <g id="trash">
-                              <path class="st0" d="M30,6.8C29.9,5.2,28.6,4,27,4h-3V3l0,0c0-1.7-1.3-3-3-3H11C9.3,0,8,1.3,8,3l0,0v1H5C3.4,4,2.1,5.2,2,6.8l0,0V8
-                                v1c0,1.1,0.9,2,2,2l0,0v17c0,2.2,1.8,4,4,4h16c2.2,0,4-1.8,4-4V11l0,0c1.1,0,2-0.9,2-2V8V6.8L30,6.8z M10,3c0-0.6,0.4-1,1-1h10
-                                c0.6,0,1,0.4,1,1v1H10V3z M26,28c0,1.1-0.9,2-2,2H8c-1.1,0-2-0.9-2-2V11h20V28z M28,8v1H4V8V7c0-0.6,0.4-1,1-1h22c0.6,0,1,0.4,1,1
-                                V8z"/>
-                            </g>
-                          </svg>
-                      </div>
+                  <form name="edit-form" onsubmit="event.preventDefault();"><div class="record-field name"><input type="text" value="" onfocusout="validate_n(this)"></div>
+                  <div class="record-field city"><input type="text" value="" onfocusout="validate_n(this)"></div>
+                  <div class="record-field category">
+                    <select onchange="refreshNum(this)">
+                      <option value="Cosmetics">Cosmetics</option>
+                      <option value="Books">Books</option>
+                      <option value="Accessories">Accessories</option>
+                      <option value="Services">Services</option>
+                    </select>
+                  </div>
+                  <div id="edit-accu" class="record-field accumulation">
+                    <label class="cbox-label" for="accumulation">
+                      <input type="checkbox" id="accumulation" name="accumulation" checked onclick="refreshNum(this.parentNode)"></input>
+                      <div class="checkmark"></div>
+                      Accu.
+                    </label>
+                  </div>
+                  <div class="record-field d-percent">
+                    <select onchange="refreshNum(this)">
+                      <option value="5">5%</option>
+                      <option value="10">10%</option>
+                      <option value="20">20%</option>
+                      <option value="30">30%</option>
+                    </select>
+                  </div>
+                  <div class="record-field exp-date">
+                    <input type="date" value="" onchange="refreshNum(this)">
+                  </div>
+                  <div class="record-field card-num"><span class="edit-number"></span></div>
+                  <div class="record-field modify">
+                    <div class="button button-edit button-save" onclick="saveRow(this, true);">OK</div>
+                    <div class="button button-del" onclick="deleteRow(this);">
+                        <svg version="1.1" class="bin-icon" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                          viewBox="0 0 32 32" xml:space="preserve">
+                          <style type="text/css">
+                          .st0{fill:#F5F5F5;}
+                          </style>
+                          <g id="trash">
+                            <path class="st0" d="M30,6.8C29.9,5.2,28.6,4,27,4h-3V3l0,0c0-1.7-1.3-3-3-3H11C9.3,0,8,1.3,8,3l0,0v1H5C3.4,4,2.1,5.2,2,6.8l0,0V8
+                              v1c0,1.1,0.9,2,2,2l0,0v17c0,2.2,1.8,4,4,4h16c2.2,0,4-1.8,4-4V11l0,0c1.1,0,2-0.9,2-2V8V6.8L30,6.8z M10,3c0-0.6,0.4-1,1-1h10
+                              c0.6,0,1,0.4,1,1v1H10V3z M26,28c0,1.1-0.9,2-2,2H8c-1.1,0-2-0.9-2-2V11h20V28z M28,8v1H4V8V7c0-0.6,0.4-1,1-1h22c0.6,0,1,0.4,1,1
+                              V8z"/>
+                          </g>
+                        </svg>
                     </div>
-                  </form>
-                </div>`;
+                  </div>
+                </form>
+              </div>`;
 
   // Insert the HTML
   record_cont.insertAdjacentHTML('afterbegin', newRow);
@@ -192,13 +213,15 @@ function deleteRow(button) {
 }
 
 // VALIDATE NAME AND CITY ******************************************************
-let validate = function(field) {
+let validate_n = function(field) {
   let pattern = /[$&+,:;=?@#|'<>.^*()%!0-9\{\}\[\]]/;
 
   if (field.value.match(pattern)) {
     field.classList.add('invalid');
+    return false;
   } else {
     field.classList.remove('invalid');
+    return true;
   }
 }
 
@@ -266,8 +289,8 @@ function editRow(button) {
   thisRecord.accu === 'Yes' ? checkbox_state = 'checked' : checkbox_state = '';
 
   // Generate the HTML
-  let editForm = `<form name="edit-form" onsubmit="event.preventDefault();"><div class="record-field name"><input type="text" value="${thisRecord.name}" onfocusout="validate(this)"></div>
-                    <div class="record-field city"><input type="text" value="${thisRecord.city}" onfocusout="validate(this)"></div>
+  let editForm = `<form name="edit-form" onsubmit="event.preventDefault();"><div class="record-field name"><input type="text" value="${thisRecord.name}" onfocusout="validate_n(this)"></div>
+                    <div class="record-field city"><input type="text" value="${thisRecord.city}" onfocusout="validate_n(this)"></div>
                     <div class="record-field category">
                       <select onchange="refreshNum(this)">
                         <option value="Cosmetics" ${options_cat[0]}>Cosmetics</option>
@@ -321,7 +344,7 @@ function editRow(button) {
   enableSaveOnEnter();
 }
 
-// Trigger the saveRow() also by pressing Enter
+// Enable saveRow on Enter
 function enableSaveOnEnter() {
   let edit_fields = document.getElementsByName('edit-form')[0].getElementsByTagName('input');
 
@@ -408,6 +431,16 @@ function saveRow(button, isNew) {
   let form = button.parentNode.parentNode;
   let rows = Array.prototype.slice.call(record_cont.children);
 
+  // Check if the data was valid
+  let nameField = form.children[0].children[0];
+  let cityField = form.children[1].children[0];
+  let dateField = form.children[5].children[0];
+
+  if (!(validate_n(nameField) && validate_n(cityField) && (dateField.value !== ''))) {
+    alert('Please fill all fields correctly before saving.');
+    return;
+  }
+
   // Write the new values to an array
   let newValues = getRowValues(form.parentNode);
 
@@ -482,9 +515,6 @@ function setActive(row) {
   // Add the active state to this row
   row.classList.add('record-row-active');
 }
-
-// SORT WORD ACTIVE STATE ******************************************************
-
 
 // Remove active state by clicking anywhere other than .record-row or .new-record
 document.addEventListener('click', function () {
