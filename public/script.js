@@ -440,8 +440,8 @@ function saveRow(button, isNew) {
   let nameField = form.children[0].children[0];
   let cityField = form.children[1].children[0];
   let dateField = form.children[5].children[0];
-
-  if (!(validate_n(nameField) && validate_n(cityField.value) && (dateField.value !== ''))) {
+debugger;
+  if (!(validate_n(nameField) && validate_n(cityField) && (dateField.value !== ''))) {
     alert('Please fill all fields correctly before saving.');
     return;
   }
