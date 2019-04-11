@@ -220,7 +220,6 @@ let validate_n = function(field) {
 
   if (field.value.match(pattern)) {
     field.classList.add('invalid');
-    document.getElementsByName('name')[0].focus();
     return false;
   } else {
     field.classList.remove('invalid');
