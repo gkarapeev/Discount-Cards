@@ -193,7 +193,7 @@ function deleteRow(button) {
 
 // VALIDATE NAME AND CITY ******************************************************
 let validate = function(field) {
-  let pattern = /[$&+,:;=?@#|'<>.^*()%!0-9]/;
+  let pattern = /[$&+,:;=?@#|'<>.^*()%!0-9\{\}\[\]]/;
 
   if (field.value.match(pattern)) {
     field.classList.add('invalid');
