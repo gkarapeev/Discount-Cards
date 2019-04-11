@@ -134,8 +134,8 @@ function insertRow() {
 
   // Define the HTML content of the new row
   var newRow = `<div class="record-row row-edit record-row-active" onclick="setActive(this);">
-                  <form name="edit-form" onsubmit="event.preventDefault();"><div class="record-field name"><input type="text" value="" onfocusout="validate_n(this)"></div>
-                  <div class="record-field city"><input type="text" value="" onfocusout="validate_n(this)"></div>
+                  <form name="edit-form" onsubmit="event.preventDefault();"><div class="record-field name"><input type="text" value="" onkeyup="validate_n(this)"></div>
+                  <div class="record-field city"><input type="text" value="" onkeyup="validate_n(this)"></div>
                   <div class="record-field category">
                     <select onchange="refreshNum(this)">
                       <option value="Cosmetics">Cosmetics</option>
@@ -214,7 +214,7 @@ function deleteRow(button) {
 
 // VALIDATE NAME AND CITY ******************************************************
 let validate_n = function(field) {
-  let pattern = /[$&+,:;=?@#|'<>.^*()%!0-9\{\}\[\]]/;
+  let pattern = /([\s]{2,}|[$&+,:;=?@#|'<>.^*()%!0-9\{\}\[\]\\\/\t]|^[\s*$]|^$|\s$)/;
 
   if (field.value.match(pattern)) {
     field.classList.add('invalid');
@@ -289,8 +289,8 @@ function editRow(button) {
   thisRecord.accu === 'Yes' ? checkbox_state = 'checked' : checkbox_state = '';
 
   // Generate the HTML
-  let editForm = `<form name="edit-form" onsubmit="event.preventDefault();"><div class="record-field name"><input type="text" value="${thisRecord.name}" onfocusout="validate_n(this)"></div>
-                    <div class="record-field city"><input type="text" value="${thisRecord.city}" onfocusout="validate_n(this)"></div>
+  let editForm = `<form name="edit-form" onsubmit="event.preventDefault();"><div class="record-field name"><input type="text" value="${thisRecord.name}" onkeyup="validate_n(this)"></div>
+                    <div class="record-field city"><input type="text" value="${thisRecord.city}" onkeyup="validate_n(this)"></div>
                     <div class="record-field category">
                       <select onchange="refreshNum(this)">
                         <option value="Cosmetics" ${options_cat[0]}>Cosmetics</option>
@@ -436,7 +436,7 @@ function saveRow(button, isNew) {
   let cityField = form.children[1].children[0];
   let dateField = form.children[5].children[0];
 
-  if (!(validate_n(nameField) && validate_n(cityField) && (dateField.value !== ''))) {
+  if (!(validate_n(nameField) && validate_n(cityField.value) && (dateField.value !== ''))) {
     alert('Please fill all fields correctly before saving.');
     return;
   }
