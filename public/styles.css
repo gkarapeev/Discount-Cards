@@ -416,6 +416,7 @@ header {
 
 .container-sort > div:hover {
   background-color: #04aa99;
+  color: white;
 }
 
 .container-sort > div:last-child:hover {
@@ -462,18 +463,6 @@ header {
 /* .modify {
   justify-content: center;
 } */
-
-.row-edit {
-  background-color: #97a5a4; /* has to match .row-edit:hover on line 561 */
-  display: flex !important;
-  transition: background-color 0.15s;
-}
-
-.row-edit form {
-  display: grid;
-  grid-template-columns: 4fr 2fr 2fr 2fr 2fr 3fr 3fr 2fr;
-  margin: 0 -10px 0 -10px;
-}
 
 .record-row-active {
   border: none;
@@ -538,8 +527,39 @@ header {
   background-color: #f4f8ff;
 }
 
-/* EDIT MODE --------------------------------- */
+.button-edit {
+  margin-right: 10px;
+  padding-top: 1px;
+}
 
+.button-del {
+  width: 30px;
+}
+
+.bin-icon {
+  width: 50%;
+}
+
+.bin-icon .st0 {
+  fill: #BF736E;
+}
+
+.record-row-active .st0 {
+  fill: #f5f5f5;
+}
+
+/* EDIT MODE --------------------------------- */
+.row-edit {
+  background-color: #97a5a4; /* has to match .row-edit:hover on line 564 */
+  display: flex !important;
+  transition: background-color 0.15s;
+}
+
+.row-edit form {
+  display: grid;
+  grid-template-columns: 4fr 2fr 2fr 2fr 2fr 3fr 3fr 2fr;
+  margin: 0 -10px 0 -10px;
+}
 .record-field input {
   height: 100%;
   border: none;
@@ -566,27 +586,4 @@ header {
 .row-edit .button-edit {
   background-color: #c7eed9;
   color: #3e4d4b;
-}
-
-/* ------------------------------------------------- */
-
-.button-edit {
-  margin-right: 10px;
-  padding-top: 1px;
-}
-
-.button-del {
-  width: 30px;
-}
-
-.bin-icon {
-  width: 50%;
-}
-
-.bin-icon .st0 {
-  fill: #BF736E;
-}
-
-.record-row-active .st0 {
-  fill: #f5f5f5;
 }
