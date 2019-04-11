@@ -198,29 +198,86 @@ function editRow(button) {
   let rows = Array.prototype.slice.call(record_cont.children);
   let thisRecord = recordData[rows.indexOf(row)]; // making an object which is identical to the database entry with the same index as the index of this row in the table. I'll need to actually generate unique record ID's if I don't do this, but I'm not ready to go there yet! :D
 
+  // A way to generate UTC dates
   function createDateAsUTC(date) {
     return new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
   }
-  //edits will go here
+
+  // Finding which values to select for the 'category' and 'percent' <select> elements
+  // 1. Arrays to hold the 'selected' state of all 4 options for both elenents - initially all are blank
+  let options_cat = ['', '', '', ''];
+  let options_perc = ['', '', '', ''];
+  // 2. Adding 'selected' state to the correct 'category' <select> element
+  switch (thisRecord.category) {
+    case 'Cosmetics':
+      options_cat[0] = 'selected';
+      break;
+    
+    case 'Books':
+      options_cat[1] = 'selected';
+      break;
+    
+    case 'Accessories':
+      options_cat[2] = 'selected';
+      break;
+    
+    case 'Services':
+      options_cat[3] = 'selected';
+      break;
+    
+    default:
+    break;
+  }
+  // 3. Adding 'selected' state to the correct 'percent' <select> element
+  switch (thisRecord.discount) {
+    case 5:
+      options_perc[0] = 'selected';
+      break;
+    
+    case 10:
+      options_perc[1] = 'selected';
+      break;
+    
+    case 20:
+      options_perc[2] = 'selected';
+      break;
+    
+    case 30:
+      options_perc[3] = 'selected';
+      break;
+    
+    default:
+    break;
+  }
+
+  // Setting the correct 'accumulation' checkbox value
+  let checkbox_state;
+  thisRecord.accu === 'Yes' ? checkbox_state = 'checked' : checkbox_state = '';
+
+  // Generate the HTML
   let editForm = `<form name="edit-form" onsubmit="event.preventDefault();"><div class="record-field name"><input type="text" value="${thisRecord.name}"></div>
                     <div class="record-field city"><input type="text" value="${thisRecord.city}"></div>
                     <div class="record-field category">
                       <select>
-                        <option value="Cosmetics">Cosmetics</option>
-                        <option value="Books">Books</option>
-                        <option value="Accessories">Accessories</option>
-                        <option value="Services">Services</option>
+                        <option value="Cosmetics" ${options_cat[0]}>Cosmetics</option>
+                        <option value="Books" ${options_cat[1]}>Books</option>
+                        <option value="Accessories" ${options_cat[2]}>Accessories</option>
+                        <option value="Services" ${options_cat[3]}>Services</option>
                       </select>
                     </div>
-                    <div class="record-field accumulation">
-                      <input type="checkbox" value="Yes" name="accumulation" checked>
+                    <div id="edit-accu" class="record-field accumulation">
+                      <label class="cbox-label" for="accumulation">
+                        <input type="checkbox" id="accumulation" name="accumulation" ${checkbox_state}></input>
+                        <div class="checkmark"></div>
+                        Accu.
+                      </label>
                     </div>
                     <div class="record-field d-percent">
                       <select>
-                        <option value="5">5%</option>
-                        <option value="10">10%</option>
-                        <option value="20">20%</option>
-                        <option value="30">30%</option>
+                        <option value="5" ${options_perc[0]}>5%</option>
+                        <option value="10" ${options_perc[1]}>10%</option>
+                        <option value="20" ${options_perc[2]}>20%</option>
+                        <option value="30" ${options_perc[3]}>30%</option>
                       </select>
                     </div>
                     <div class="record-field exp-date">
@@ -275,6 +332,18 @@ function saveRow(button, isNew) {
   // Write the new values to an array
   for (let i = 0; i < row.children.length; i++) {
     newValues.push(row.children[i].children[0].value);
+
+    // For the checkbox, gotta dig 1 element deeper and get the checkbox state
+    if (i === 3) {
+      let value = row.children[3].children[0].children[0].checked;
+      // And overwrite the 'undefined' value which will have inevitably been written to newValues[3]
+      newValues[3] = value ? 'Yes' : 'No';
+    }
+
+    //For the percent field, cast the string from the element value to a number
+    if (i === 4 ) {
+      newValues[4] = parseInt(row.children[4].children[0].value);
+    }
   }
 
   // Format the date properly
