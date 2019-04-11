@@ -48,7 +48,7 @@ var createDB = function() {
   var georgi = new Record('Georgi Karapeev', 'Sofia', 'Books', 'No', 5, new Date(2019, 3, 5), 2005050419);
   var georgi_2 = new Record('Georgi Karapeev', 'Sofia', 'Cosmetics', 'Yes', 20, new Date(2019, 11, 7), 2120071220);
   var marko = new Record('Marko Popovic', 'Niš', 'Cosmetics', 'Yes', 30, new Date(2019, 4, 5), 1130050519);
-  var marko_2 = new Record('Marko Popovic', 'Niš', 'Books', 'Yes', 5, new Date(2022, 8, 17), 2005170922);
+  var marko_2 = new Record('Marko Popovic', 'Niš', 'Books', 'Yes', 5, new Date(2022, 8, 17), 2105170922);
   var vlada = new Record('Vladan Petrovic', 'Niš', 'Services', 'No', 10, new Date(2019, 5, 5), 4010050619);
   var vlada_2 = new Record('Vladan Petrovic', 'Niš', 'Services', 'Yes', 20, new Date(2020, 0, 1), 3120010120);
   var tsvyatko = new Record('Tsvyatko Ivanov', 'Plovdiv', 'Accessories', 'Yes', 20, new Date(2019, 6, 5), 3120050719);
@@ -258,7 +258,7 @@ function editRow(button) {
   let editForm = `<form name="edit-form" onsubmit="event.preventDefault();"><div class="record-field name"><input type="text" value="${thisRecord.name}"></div>
                     <div class="record-field city"><input type="text" value="${thisRecord.city}"></div>
                     <div class="record-field category">
-                      <select>
+                      <select onchange="refreshNum(this)">
                         <option value="Cosmetics" ${options_cat[0]}>Cosmetics</option>
                         <option value="Books" ${options_cat[1]}>Books</option>
                         <option value="Accessories" ${options_cat[2]}>Accessories</option>
@@ -267,13 +267,13 @@ function editRow(button) {
                     </div>
                     <div id="edit-accu" class="record-field accumulation">
                       <label class="cbox-label" for="accumulation">
-                        <input type="checkbox" id="accumulation" name="accumulation" ${checkbox_state}></input>
+                        <input type="checkbox" id="accumulation" name="accumulation" ${checkbox_state} onclick="refreshNum(this.parentNode)"></input>
                         <div class="checkmark"></div>
                         Accu.
                       </label>
                     </div>
                     <div class="record-field d-percent">
-                      <select>
+                      <select onchange="refreshNum(this)">
                         <option value="5" ${options_perc[0]}>5%</option>
                         <option value="10" ${options_perc[1]}>10%</option>
                         <option value="20" ${options_perc[2]}>20%</option>
@@ -281,9 +281,9 @@ function editRow(button) {
                       </select>
                     </div>
                     <div class="record-field exp-date">
-                      <input type="date" value="${createDateAsUTC(new Date(thisRecord.expiry)).toISOString().slice(0,10)}">
+                      <input type="date" value="${createDateAsUTC(new Date(thisRecord.expiry)).toISOString().slice(0,10)}" onchange="refreshNum(this)">
                     </div>
-                    <div class="record-field card-num"><input type="text" value="${thisRecord.num}"></div>
+                    <div class="record-field card-num"><span class="edit-number">${thisRecord.num}</span></div>
                     <div class="record-field modify">
                       <div class="button button-edit button-save" onclick="saveRow(this);">OK</div>
                       <div class="button button-del" onclick="deleteRow(this);">
@@ -324,27 +324,81 @@ function enableSaveOnEnter() {
   }
 }
 
-// SAVE RECORD
-function saveRow(button, isNew) {
-  let row = button.parentNode.parentNode;
-  let rows = Array.prototype.slice.call(record_cont.children);
-  let newValues = [];
-  // Write the new values to an array
-  for (let i = 0; i < row.children.length; i++) {
-    newValues.push(row.children[i].children[0].value);
+// GET ROW VALUES **************************************************************
+function getRowValues(row) {
+  let rowValues = [];
+  
+  for (let i = 0; i < row.children[0].children.length - 1; i++) { // length minus 1, because the last one is the card number, which we will generate later
+    rowValues.push(row.children[0].children[i].children[0].value);
 
     // For the checkbox, gotta dig 1 element deeper and get the checkbox state
     if (i === 3) {
-      let value = row.children[3].children[0].children[0].checked;
+      let value = row.children[0].children[3].children[0].children[0].checked;
       // And overwrite the 'undefined' value which will have inevitably been written to newValues[3]
-      newValues[3] = value ? 'Yes' : 'No';
+      rowValues[3] = value ? 'Yes' : 'No';
     }
 
-    //For the percent field, cast the string from the element value to a number
+    // For the percent field, cast the string from the element value to a number
     if (i === 4 ) {
-      newValues[4] = parseInt(row.children[4].children[0].value);
+      rowValues[4] = parseInt(row.children[0].children[4].children[0].value);
     }
   }
+
+  return rowValues;
+}
+
+// GENERATE CARD NUMBER ********************************************************
+function generateCardNum(values) {
+  let cardNum = '';
+  // 1. Category
+  switch (values[2]) {
+    case 'Cosmetics':
+      cardNum += 1;
+      break;
+    case 'Books':
+      cardNum += 2;
+      break;
+    case 'Accessories':
+      cardNum += 3;
+      break;
+    case 'Services':
+      cardNum += 4;
+      break;
+    default:
+    break;
+  }
+  // 2. Accumulation
+  values[3] === 'Yes' ? cardNum += 1 : cardNum += 0;
+  // 3. Percentage
+  // 3.1 Padding
+  if (values[4] < 10) {
+    cardNum += 0;
+  }
+  // 3.2 The percent ammount
+  cardNum += values[4];
+  // 4. Expiry Date
+  cardNum += values[5].slice(8, 10); // Add the day
+  cardNum += values[5].slice(5, 7); // Add the month
+  cardNum += values[5].slice(2, 4); // Add the year
+  return cardNum;
+}
+
+// REFRESH CARD NUMBER *********************************************************
+function refreshNum(field) {
+  let row = field.parentNode.parentNode.parentNode;
+  let rowValues = getRowValues(row);
+  let cardNumberField = row.children[0].children[6];
+
+  cardNumberField.children[0].innerHTML = generateCardNum(rowValues);
+}
+
+// SAVE RECORD
+function saveRow(button, isNew) {
+  let form = button.parentNode.parentNode;
+  let rows = Array.prototype.slice.call(record_cont.children);
+
+  // Write the new values to an array
+  let newValues = getRowValues(form.parentNode);
 
   // Format the date properly
   let dateArr = newValues[5].split('-');
@@ -360,7 +414,7 @@ function saveRow(button, isNew) {
     'accu': newValues[3],
     'discount': newValues[4],
     'expiry': theDate,
-    'num': newValues[6]
+    'num': generateCardNum(newValues)
   }
 
   // If it's a new record, insert it at the fron of recordData
@@ -369,21 +423,21 @@ function saveRow(button, isNew) {
     localStorage.discountCards = JSON.stringify(recordData);
   } else {
     // Else overwrite the corresponding index of recordData
-    recordData[rows.indexOf(row.parentNode)] = newRecord;
+    recordData[rows.indexOf(form.parentNode)] = newRecord;
     // And update localStorage to match
     localStorage.discountCards = JSON.stringify(recordData);
   }
 
-  row.parentNode.classList.remove("row-edit");
+  form.parentNode.classList.remove("row-edit");
 
   // Finally, update the HTML with the new data and revert to standard view
-  row.parentNode.innerHTML = `<div class="record-field name">${newValues[0]}</div>
+  form.parentNode.innerHTML = `<div class="record-field name">${newValues[0]}</div>
                               <div class="record-field city">${newValues[1]}</div>
                               <div class="record-field category">${newValues[2]}</div>
                               <div class="record-field accumulation">${newValues[3]}</div>
                               <div class="record-field d-percent">${newValues[4]}%</div>
                               <div class="record-field exp-date">${theDate}</div>
-                              <div class="record-field card-num">${newValues[6]}</div>
+                              <div class="record-field card-num">${generateCardNum(newValues)}</div>
                               <div class="record-field modify">
                                 <div class="button button-edit" onclick="editRow(this);">Edit</div>
                                 <div class="button button-del" onclick="deleteRow(this);">

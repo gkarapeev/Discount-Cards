@@ -625,3 +625,18 @@ header {
   font-family: 'Roboto', sans-serif;
   font-weight: inherit;
 }
+
+.edit-number {
+  display: block;
+}
+
+.row-edit .record-field.card-num {
+  border-radius: 3px;
+  padding-left: 10px;
+  width: 80%;
+  cursor: initial;
+  color: #ffffff;
+  background-color: hsl(176, 7%, 55%);
+  box-sizing: border-box;
+  border: 1px solid #afb4b4;
+}
