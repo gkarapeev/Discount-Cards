@@ -131,11 +131,10 @@ function insertRow() {
 
   // Remove the active state from any other active elements
   removeActive();
-
   // Define the HTML content of the new row
   var newRow = `<div class="record-row row-edit record-row-active" onclick="setActive(this);">
-                  <form name="edit-form" onsubmit="event.preventDefault();"><div class="record-field name"><input type="text" value="" onkeyup="validate_n(this)"></div>
-                  <div class="record-field city"><input type="text" value="" onkeyup="validate_n(this)"></div>
+                  <form name="edit-form" onsubmit="event.preventDefault();"><div class="record-field name"><input type="text" value="" name="name" onkeyup="validate_n(this)"></div>
+                  <div class="record-field city"><input type="text" name="city" value="" onkeyup="validate_n(this)"></div>
                   <div class="record-field category">
                     <select onchange="refreshNum(this)">
                       <option value="Cosmetics">Cosmetics</option>
@@ -186,6 +185,9 @@ function insertRow() {
   // Insert the HTML
   record_cont.insertAdjacentHTML('afterbegin', newRow);
 
+  // Place the cursor inside
+  document.getElementsByName('name')[0].focus();
+
   enableSaveOnEnter();
 
 }
@@ -218,6 +220,7 @@ let validate_n = function(field) {
 
   if (field.value.match(pattern)) {
     field.classList.add('invalid');
+    document.getElementsByName('name')[0].focus();
     return false;
   } else {
     field.classList.remove('invalid');
@@ -289,8 +292,8 @@ function editRow(button) {
   thisRecord.accu === 'Yes' ? checkbox_state = 'checked' : checkbox_state = '';
 
   // Generate the HTML
-  let editForm = `<form name="edit-form" onsubmit="event.preventDefault();"><div class="record-field name"><input type="text" value="${thisRecord.name}" onkeyup="validate_n(this)"></div>
-                    <div class="record-field city"><input type="text" value="${thisRecord.city}" onkeyup="validate_n(this)"></div>
+  let editForm = `<form name="edit-form" onsubmit="event.preventDefault();"><div class="record-field name"><input type="text" name="name" value="${thisRecord.name}" onkeyup="validate_n(this)"></div>
+                    <div class="record-field city"><input type="text" name="city" value="${thisRecord.city}" onkeyup="validate_n(this)"></div>
                     <div class="record-field category">
                       <select onchange="refreshNum(this)">
                         <option value="Cosmetics" ${options_cat[0]}>Cosmetics</option>
@@ -340,6 +343,8 @@ function editRow(button) {
   row.innerHTML = editForm;
 
   row.classList.add("row-edit");
+
+  document.getElementsByName('name')[0].focus();
 
   enableSaveOnEnter();
 }
