@@ -508,8 +508,17 @@ function saveRow(button, isNew) {
 // ROW ACTIVE STATE ************************************************************
 function removeActive() {
   let active_element = document.querySelector('.record-row-active');
-  if (active_element) {
-    active_element.classList.remove('record-row-active');
+
+  let i = 0;
+
+  while (active_element && i < row_list.length) {
+    if (!(row_list[i].classList.contains('row-edit'))) {
+      row_list[i].classList.remove('record-row-active');
+    }
+    
+    active_element = document.querySelector('.record-row-active');
+
+    i++;
   }
 }
 
@@ -522,8 +531,11 @@ function setActive(row) {
 
 // Remove active state by clicking anywhere other than .record-row or .new-record
 document.addEventListener('click', function () {
-  if ((event.target.closest('.record-row')) || (event.target.closest('.new-record')) || (event.target.closest('.button-edit'))) return;
-  else removeActive();
+  if ((event.target.closest('.record-row')) || (event.target.closest('.new-record')) || (event.target.closest('.button-edit'))) {
+    return;
+  } else {
+    removeActive();
+  }
 });
 
 // FILTER **********************************************************************
