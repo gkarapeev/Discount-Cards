@@ -133,8 +133,8 @@ function insertRow() {
   removeActive();
   // Define the HTML content of the new row
   var newRow = `<div class="record-row row-edit record-row-active" onclick="setActive(this);">
-                  <form name="edit-form" onsubmit="event.preventDefault();"><div class="record-field name"><input type="text" value="" name="name" onkeyup="validate_n(this)"></div>
-                  <div class="record-field city"><input type="text" name="city" value="" onkeyup="validate_n(this)"></div>
+                  <form name="edit-form" onsubmit="preventDefault();"><div class="record-field name"><input type="text" value="" name="name" onkeyup="validate_n(this)" placeholder="Name and surname"></div>
+                  <div class="record-field city"><input type="text" name="city" value="" onkeyup="validate_n(this)" placeholder="City"></div>
                   <div class="record-field category">
                     <select onchange="refreshNum(this)">
                       <option value="Cosmetics">Cosmetics</option>
@@ -291,8 +291,8 @@ function editRow(button) {
   thisRecord.accu === 'Yes' ? checkbox_state = 'checked' : checkbox_state = '';
 
   // Generate the HTML
-  let editForm = `<form name="edit-form" onsubmit="event.preventDefault();"><div class="record-field name"><input type="text" name="name" value="${thisRecord.name}" onkeyup="validate_n(this)"></div>
-                    <div class="record-field city"><input type="text" name="city" value="${thisRecord.city}" onkeyup="validate_n(this)"></div>
+  let editForm = `<form name="edit-form" onsubmit="event.preventDefault();"><div class="record-field name"><input type="text" name="name" value="${thisRecord.name}" onkeyup="validate_n(this)" placeholder="Name and surname"></div>
+                    <div class="record-field city"><input type="text" name="city" value="${thisRecord.city}" onkeyup="validate_n(this)" placeholder="City"></div>
                     <div class="record-field category">
                       <select onchange="refreshNum(this)">
                         <option value="Cosmetics" ${options_cat[0]}>Cosmetics</option>

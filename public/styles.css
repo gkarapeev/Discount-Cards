@@ -422,6 +422,7 @@ header {
 .container-sort > div:last-child:hover {
   background-color: #009688;
   cursor: initial;
+  color: inherit;
 }
 
 .sort-word-active {
@@ -572,6 +573,10 @@ header {
   width: 90%;
   font-size: 1.1rem;
   transition: background-color 0.15s;
+}
+
+.record-field input::placeholder {
+  color: #b8b8b8;
 }
 
 .record-field input:focus {
