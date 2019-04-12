@@ -1,4 +1,5 @@
-// GLOBAL VARIABLES ************************************************************
+//GLOBAL VARIABLES ***************************************************
+//#region
 // 0. RECORD DATA
 var recordData;
 // 1. FILTERS
@@ -24,6 +25,7 @@ var search_box = document.getElementById('search-box');
 // 2. RECORDS
 var record_cont = document.querySelector('.container-records');
 var row_list = document.getElementsByClassName('record-row');
+//#endregion
 
 // RECORD OBJECT CONSTRUCTOR ***************************************************
 var myDateFormat = {
